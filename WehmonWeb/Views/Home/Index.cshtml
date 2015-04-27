@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+       @{
+           Html.RenderAction("RenderSlider", "Home");
+           Html.RenderPartial("_JumboTron");
+           Html.RenderPartial("_Info");           
+       }
+@{
+    if (TempData.ContainsKey("Error"))
+    {
+        <script type="">
+            alert("Failed to login");
+        </script>
+        TempData.Remove("Error");
+    }
+}

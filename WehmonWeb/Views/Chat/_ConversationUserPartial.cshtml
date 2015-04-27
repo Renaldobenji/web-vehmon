@@ -1,0 +1,29 @@
+﻿@model WehmonWeb.Models.ConversationUserModel
+<div id="userModalBody" class="modal-body">
+    <div id="the-basics">
+        <div class="form-group">
+            <label for="userSelecet">Select User</label>
+            <select id="userSelecet" size="1" class="form-control float-left">
+                @foreach (var user in Model.UserList.Where(x=>Model.ConversationUserList.All(c => x.UserId != c.UserId)))
+                {
+                    <option value="@user.UserId">@user.UserName</option>
+                }
+
+            </select>
+
+        </div>
+        <div class="text-center">
+            <button id="addUserBtn" type="button" class="btn btn-success">Add User</button>
+        </div>
+        <div id="userDiv">
+            @foreach (var user in Model.ConversationUserList)
+            {
+                <span data-userId="@user.UserId" class="label label-primary userLabel">@user.UserName</span>
+            }
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button id="saveBtn" type="button" class="btn btn-primary">Save changes</button>
+</div>

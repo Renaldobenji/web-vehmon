@@ -1,0 +1,107 @@
+﻿@model List<WehmonWeb.Models.CompanyModel>
+@{
+    ViewBag.Title = "Company";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+    
+}
+@{
+    if (ViewBag.Error != null)
+    {
+        <p class="bg-danger">@ViewBag.Error</p>
+    }
+}
+<h2>Company Registration</h2>
+<button data-toggle="modal" data-target="#myModal" id="createCompany" class="btn">Create</button>
+<table class="table table-striped">
+    <tr>
+        <th>Company Name</th>
+        <th>User Count</th>
+        <th>Active</th>
+        <th>Edit</th>
+     
+    </tr>
+    @{
+        foreach (var companyModel in Model)
+        {
+        <tr>
+            <td>
+                @companyModel.CompanyName
+            </td>
+            <td>
+                @companyModel.CompanyUserCount
+            </td>
+            <td>
+                @{
+            string ischecked = "";
+            if (companyModel.IsCompanyActive)
+            {
+                ischecked = "checked";
+            }
+                    
+                }
+                <input type="checkbox" disabled @ischecked/>
+            </td>
+            <td>
+                <button data-id="@companyModel.CompanyId" data-companyName="@companyModel.CompanyName" data-isActive="@companyModel.IsCompanyActive"  data-CompanyUserCount="@companyModel.CompanyUserCount" type="button" class="btn changeCompany" data-toggle="modal" data-target="#myModal">Edit</button>
+            </td>
+        </tr>
+        }
+    }
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="@Url.Action("CreateUpdateCompany")" method="POST">
+            <input id="companyIdInput" type="hidden" name="companyId" />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Company Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nameInput">Company Name</label>
+                        <input name="companyName" type="text" class="form-control" id="nameInput" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="numberOfUsers">Number Of Users</label>
+                        <input name="companyUserCount" type="number" class="form-control" id="numberOfUsers">
+                    </div>
+                    <div class="form-group">
+                        <label for="isActive">Is Active</label>
+                        <input name="isEnabled" type="checkbox" class="form-control" id="isActive">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input class="btn" type="submit" value="Save changes" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(".changeCompany").on("click", function () {
+        $("#nameInput").val($(this).attr("data-companyName"));
+        $("#numberOfUsers").val($(this).attr("data-CompanyUserCount"));
+        $("#companyIdInput").val($(this).attr("data-id"));
+        var isActive = $(this).attr("data-isActive") == "True";
+        if (isActive) {
+            $("#isActive").attr("checked", "checked");
+        } else {
+            $("#isActive").removeAttr("checked");
+        }
+    });
+
+    $("#createCompany").on("click", function () {
+        $("#nameInput").val("");
+        $("#numberOfUsers").val("0");
+        $("#companyIdInput").val("-1");
+        $("#isActive").attr("checked", "checked");
+
+    });
+
+</script>

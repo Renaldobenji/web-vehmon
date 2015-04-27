@@ -1,0 +1,200 @@
+﻿@model WehmonWeb.Models.ChatModel
+
+<div style="position: fixed;margin-top: -40px" class="col-lg-3 col-md-offset-4">
+    <div style="" class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div id="chatHeading" class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Conversations</a>
+                    <button onclick="addConv()" style="margin-left: 15px;margin-top: -8px" type="button" class="btn btn-default btn-xs">Add New</button>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse">
+
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        @foreach (var conversation in Model.ConversationModels)
+                        {
+                            string convId = "Conv" + conversation.ID;
+                            <li><a href="#@convId" data-toggle="tab">@conversation.ConversationName<button onclick="removeConv(@conversation.ID)" style="margin-left: 5px" type="button" class="btn btn-default btn-xs">X</button></a>
+
+                            </li>
+                           
+                        }
+                    </ul>
+                    <div class="tab-content">
+                        @foreach (var conv in Model.ConversationModels)
+                        {
+                            string convId = "Conv" + conv.ID;
+                            string divId = "ChatView" + conv.ID;
+                            string divIdTop = "ChatViewDiv" + conv.ID;
+                            
+                            <div class="tab-pane fade" id="@convId">
+                                <div class="chat-panel panel panel-default">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-comments fa-fw"></i>
+                                        Chat
+                                       
+                                        <button onclick="setUserPartial(@conv.ID)" type="button" class="btn" data-toggle="modal" data-target="#userModal">
+                                            People
+                                        </button>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div id="@divIdTop" style="max-height: 400px;overflow: scroll" class="panel-body">
+                                        <ul id="@divId" style="margin-left:-20px" class="chat">
+                                            @{
+                            int count = 0;
+                            foreach (var message in conv.Messages)
+                            {
+                                count++;
+                                Html.RenderAction("RenderChatField", new {number = count, time = message.Time, sender = message.Sender, message = message.Message});
+                            }
+                                            }
+                                        </ul>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm messageInput" placeholder="Type your message here...">
+                                            <span class="input-group-btn">
+                                                <button data-convId="@conv.ID" class="btn btn-warning btn-sm sendMessageBtn" id="btn-chat">
+                                                    Send
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+             
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.panel -->
+</div>
+
+
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">People In Conversation</h4>
+            </div>
+            <div id="usermodelInner">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var curConvId = 0;
+    var objHub;
+    function setUserPartial(convId) {
+        curConvId = convId;
+        $("#usermodelInner").load("@Url.Action("RenderUserPartial", "Chat")?conversationId=" + convId);
+    }
+
+    $(document).on("click", "#addUserBtn", function () {
+        var userId = $("#userSelecet").val();
+        var userName = $("#userSelecet option:selected").text();
+        $("#userSelecet option[value='" + userId + "']").remove();
+        $("#userDiv").append("<span style=\"margin-right:5px\" data-userId=\"" + userId + "\" class=\"label label-primary userLabel\">" + userName + "</span>");
+        $.ajax({
+            url: "@Url.Action("SetConversationUsers")",
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+            },
+            data: { conversationId: curConvId, userId: userId }
+        });
+    });
+
+    $(document).on("click", ".sendMessageBtn", function () {
+        var text = $(this).closest('.input-group').children('.messageInput').val();
+        var convId = $(this).attr("data-convId");
+        objHub.server.sendMessageToGroup("@HttpContext.Current.User.Identity.Name", text, convId);
+        $.ajax({
+            url: "@Url.Action("SendUserMessage", "Chat")?converstationId=" + convId + "&message=" + text,
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+            }
+        });
+        $(".messageInput").val("");
+    });
+
+    function removeConv(convId) {
+        if (confirm("Are you sure you want to remove this conversation?")) {
+            $.ajax({
+                url: "@Url.Action("RemoveChat", "Chat")?converstationId=" + convId,
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    window.location.reload();
+                }
+            });
+        }
+    }
+
+    function addConv() {
+        var convName = prompt("What is the name of the conversation?");
+        if (convName) {
+            $.ajax({
+                url: "@Url.Action("AddConversation", "Chat")?conversationName=" + convName,
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    window.location.reload();
+                }
+            });
+        }
+    }
+
+    $(function () {
+        // Reference the auto-generated proxy for the hub.
+        //
+
+        objHub = $.connection.chatHub;
+        
+        loadClientMethods(objHub);
+
+        $.connection.hub.start().done(function () {
+            console.log("done");
+            objHub.server.connectUser("@HttpContext.Current.User.Identity.Name");
+
+        }).fail(function (error) {
+            console.log('Invocation of start failed. Error: ' + error);
+        });
+        
+        
+        
+        
+        function loadClientMethods(bub) {
+            bub.client.UpdateCoordinates = function (userId, coordinates) {
+                for (var i = 0; i < coordinates.length; i++)
+                    {
+                    trucks[userId + "Truck"].AddCoord(coordinates[i].Lat, coordinates[i].Lng);
+                    }
+            };
+            bub.client.getMessages = function (userName, message, group) {
+                $("#chatHeading").fadeIn(1000).fadeOut(1000).fadeIn(1000).fadeOut(1000).fadeIn(1000);
+                $.ajax({
+                    url: "@Url.Action("RenderChatFieldAjax")?number=" + ($("#ChatView" + group).find("li").length-1) + "&sender=" + userName + "&message=" + message,
+                     type: 'get',
+                     dataType: 'html',
+                     success: function (data) {
+                         $("#ChatView" + group).append(data);
+                     }
+                });
+                $('#ChatViewDiv' + group).animate({ scrollTop: $('#ChatViewDiv' + group)[0].scrollHeight }, 1000);
+            };
+        };
+       
+    });
+
+
+</script>

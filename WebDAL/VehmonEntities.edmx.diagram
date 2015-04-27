@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7addd3fa0f384827ac869d79e0d380a8" Name="Diagram1">
+        <EntityTypeShape EntityType="vehmonModel.absencetype" Width="1.5" PointX="3.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.auditentry" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.auditentrytype" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.authenticationtoken" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.conversation" Width="1.5" PointX="8.375" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.coord" Width="1.5" PointX="7.5" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.devicecoordinate" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.groupmembership" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.grouprolemapping" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.group" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.message" Width="1.5" PointX="10.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.role" Width="1.5" PointX="6.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.route" Width="1.5" PointX="5.25" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.timetracking" Width="1.5" PointX="3" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.userabsence" Width="1.5" PointX="6" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.userconversation" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.usermessagereceipt" Width="1.5" PointX="10.875" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.userrolemapping" Width="1.5" PointX="9" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="vehmonModel.user" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <AssociationConnector Association="vehmonModel.userabsence_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.auditentry_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.authenticationtoken_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.messages_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.userconversation_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.coord_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.messages_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.usermessagereceipt_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.userrolemapping_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.route_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.timetracking_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.userabsence_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.userconversation_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.usermessagereceipt_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="vehmonModel.userrolemapping_ibfk_1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="vehmonModel.company" Width="1.5" PointX="0.75" PointY="17.875" />
+        <AssociationConnector Association="vehmonModel.users_ibfk_1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

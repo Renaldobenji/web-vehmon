@@ -1,0 +1,74 @@
+﻿<nav class="navbar navbar-inverse navbar-fixed-top ">
+    <div class="container">
+        <div class="navbar-header navbar-collapse collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" rel="home" href="#" title="Buy Sell Rent Everyting">
+                <img style="max-width:100px; margin-top: -7px;"
+                     src="@Url.Content("~/Content/img/SCORPIONu logo.png")"/>
+
+            </a>
+            <a class="navbar-brand">Vehmon Applications</a>
+            <ul class="nav navbar-nav ">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <!-- Top Menu Items -->
+                <ul class="nav navbar-right top-nav ">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>@User.Identity.Name <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-user"></i>Profile</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-fw fa-desktop"></i>Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-gear"></i>Settings</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="@Url.Action("LogOff", "Account")"><i class="fa fa-fw fa-power-off"></i>Log Out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            }
+            else
+            {
+                <form action="@Url.Action("Login", "Account")" method="POST" class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input name="userName" type="text" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input name="password" type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                </form>
+            }
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</nav>

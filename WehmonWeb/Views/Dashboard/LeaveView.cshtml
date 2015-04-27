@@ -1,0 +1,41 @@
+﻿@model List<WehmonWeb.Models.LeaveModel>
+@{
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+<h2>Booked Leave</h2>
+
+@if (Model.Count < 1)
+{
+    <h3>You have no current leave requests to display!</h3>
+}
+else
+{
+    <table class="table table-striped">
+        <tr>
+            <th>Requester's Name</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th>Leave Type</th>
+
+        </tr>
+        @{
+    foreach (var leaveModel in Model)
+    {
+            <tr>
+                <td>
+                    @leaveModel.UserName
+                </td>
+                <td>
+                    @leaveModel.FromDate
+                </td>
+                <td>
+                    @leaveModel.ToDate
+                </td>
+                <td>
+                    @leaveModel.LeaveType
+                </td>
+            </tr>
+    }
+        }
+    </table>
+}

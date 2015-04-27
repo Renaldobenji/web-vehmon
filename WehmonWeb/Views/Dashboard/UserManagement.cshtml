@@ -1,0 +1,155 @@
+﻿@model WehmonWeb.Models.UserScreenModel
+@{
+    ViewBag.Title = "UserManagement";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+
+}
+@{
+    if (TempData.ContainsKey("Error"))
+    {
+    <p class="bg-danger">@TempData["Error"]</p>
+        TempData.Remove("Error");
+    }
+}
+
+<h2>Company Registration</h2>
+<h4>Allowed Number Of Users @Model.AllowedUserCount</h4>
+<button data-toggle="modal" data-target="#myModal" id="createCompany" class="btn">Create</button>
+<table class="table table-striped">
+    <tr>
+        <th>User Name</th>
+        <th>First Name</th>
+        <th>Surname</th>
+        <th>EMail</th>
+        <th>ID Number</th>
+        <th>Edit</th>
+           <th>Delete</th>
+    </tr>
+    @{
+        foreach (var companyModel in Model.Users)
+        {
+        <tr>
+            <td>
+                @companyModel.UserName
+            </td>
+            <td>
+                @companyModel.Firstname
+            </td>
+            <td>
+                @companyModel.Surname
+            </td>
+            <td>
+                @companyModel.EMail
+            </td>
+            <td>
+                @companyModel.IdentificationNumber
+            </td>
+            <td>
+                <button data-id="@companyModel.UserID" data-userName="@companyModel.UserName" data-firstName="@companyModel.Firstname" data-surname="@companyModel.Surname"
+                        data-email="@companyModel.EMail" data-idNumber="@companyModel.IdentificationNumber"
+                        type="button" class="btn changeUser" data-toggle="modal" data-target="#myModal">
+                    Edit</button>
+
+            </td>
+            <td>
+                <button data-id="@companyModel.UserID" 
+                    type="button" class="btn deleteUser" data-toggle="modal" data-target="#okModal">
+                    Delete</button>
+            </td>
+        </tr>
+        }
+    }
+</table>
+
+
+<div class="modal fade" id="okModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="@Url.Action("DeleteUser")" method="POST">
+            <input id="userIdInputOk" type="hidden" name="userId" />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Are You Sure?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input class="btn" type="submit" value="Yes" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="@Url.Action("CreateUpdateUser")" method="POST">
+            <input id="userIdInput" type="hidden" name="userId" />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Or Update User</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nameInput">User Name</label>
+                        <input name="userName" type="text" class="form-control" id="nameInput" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input name="firstName" type="text" class="form-control" id="firstName" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">Surname</label>
+                        <input name="surname" type="text" class="form-control" id="surname" placeholder="Surname">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input name="email" type="email" class="form-control" id="email" placeholder="Email Address">
+                    </div>
+                    <div class="form-group">
+                        <label for="idNumber">ID Number</label>
+                        <input name="idNumber" type="text" class="form-control" id="idNumber" placeholder="ID Number">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input name="password" type="text" class="form-control" id="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input class="btn" type="submit" value="Save changes" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(".deleteUser").on("click",function() {
+        $("#userIdInputOk").val($(this).attr("data-id"));
+    });
+
+    $(".changeUser").on("click", function () {
+        $("#userIdInput").val($(this).attr("data-id"));
+        $("#nameInput").val($(this).attr("data-userName"));
+        $("#firstName").val($(this).attr("data-firstName"));
+        $("#surname").val($(this).attr("data-surname"));
+        $("#email").val($(this).attr("data-email"));
+        $("#idNumber").val($(this).attr("data-idNumber"));
+        $("#password").val("");
+    });
+
+    $("#createCompany").on("click", function () {
+        $("#userIdInput").val("-1");
+        $("#nameInput").val("");
+        $("#firstName").val("");
+        $("#surname").val("");
+        $("#email").val("");
+        $("#idNumber").val("");
+        $("#password").val("");
+        $("#isActive").attr("checked", "checked");
+
+    });
+
+</script>
