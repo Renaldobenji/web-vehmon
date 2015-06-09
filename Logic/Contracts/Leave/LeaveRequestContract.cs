@@ -11,12 +11,12 @@ namespace Logic.Contracts.Leave
         public int LeaveRequestId { get; set; }
 
         [DataMember]
-        public LeaveRequestTypes LeaveRequestType { get; set; }
+        public String LeaveRequestType { get; set; }
 
         [DataMember]
-        public DateTime StartDateTime { get; set; }
+        public String StartDateTime { get; set; }
 
         [DataMember]
-        public DateTime EndDateTime { get; set; }
+        public String EndDateTime { get; set; }
     }
 }

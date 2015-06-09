@@ -62,6 +62,7 @@ namespace VehmonWebServices
                 Message = message,
                 MessageSentDate = DateTime.ParseExact(dateSent, "yyyy-MM-dd-HH-mm", CultureInfo.InvariantCulture),
             });
+
         }
 
         public List<UserDetailContract> GetAllUsersForConversation(string token, string conversationId)

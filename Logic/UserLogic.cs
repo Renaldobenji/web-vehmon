@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using Logic.Contracts.UserCreation;
+using Logic.HelperLogic;
 
 namespace Logic
 {
@@ -146,6 +147,18 @@ namespace Logic
                     vehmonEntities.SaveChanges();
                 }
             }
+
+            //Push Notificaiton to user
+            new AndroidPushNotifications().PushNotification(
+                    GetDeviceID(response.GeneratedToken)
+                    , new Contracts.Notifications.VehmonNotification()
+                    {
+                        NotificationType = "MessageReceived"
+                        ,
+                        NotificationPayload = "This is the message Payload"
+                    }
+                );
+            
             return response;
         }
 
@@ -289,6 +302,21 @@ namespace Logic
                 context.SaveChanges();
             }
             return response;
+        }
+
+        public String GetDeviceID(String token)
+        {
+            var tokenGuid = Guid.Parse(token);            
+            using (var context = new vehmonEntities2())
+            {
+                var userToken = context.authenticationtokens.FirstOrDefault(x => x.authenticationTokenValue == tokenGuid);
+                if (userToken == null)
+                {
+                    return null;
+                }
+                else
+                    return userToken.user.deviceID;                
+            }            
         }
     }
 }

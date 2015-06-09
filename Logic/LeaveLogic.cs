@@ -72,13 +72,13 @@ namespace Logic
                 {
                     return response;
                 }
-                var allRequests = userCurrent.userabsences.Where(x => x.absencetype.absenceTypeCode != LeaveRequestTypes.Canceled.ToString()).OrderByDescending(x => x.fromDate).Take(10).ToList();
+                var allRequests = userCurrent.userabsences.Where(x => x.absencetype.absenceTypeCode != LeaveRequestTypes.Canceled.ToString()).OrderByDescending(x => x.fromDate).Take(20).ToList();
                 return allRequests.Select(x=>new LeaveRequestContract
                 {
-                    EndDateTime = x.toDate,
-                    StartDateTime = x.fromDate,
+                    EndDateTime = x.toDate.ToString("yyyy-MM-dd"),
+                    StartDateTime = x.fromDate.ToString("yyyy-MM-dd"),
                     LeaveRequestId = x.userAbsenseID,
-                    LeaveRequestType = (LeaveRequestTypes)Enum.Parse( typeof (LeaveRequestTypes),x.absencetype.absenceTypeCode)
+                    LeaveRequestType = ((LeaveRequestTypes)x.absencetype.absenceTypeID).ToString()
                 }).ToList();
             }
         }
@@ -96,10 +96,10 @@ namespace Logic
                 var allRequests = userCurrent.userabsences.OrderByDescending(x => x.fromDate).Take(10).ToList();
                 return allRequests.Select(x => new LeaveRequestContract
                 {
-                    EndDateTime = x.toDate,
-                    StartDateTime = x.fromDate,
+                    EndDateTime = x.toDate.ToShortDateString(),
+                    StartDateTime = x.fromDate.ToShortDateString(),
                     LeaveRequestId = x.absenseTypeID,
-                    LeaveRequestType = (LeaveRequestTypes)Enum.Parse(typeof(LeaveRequestTypes), x.absencetype.absenceTypeCode)
+                    LeaveRequestType = ((LeaveRequestTypes)x.absencetype.absenceTypeID).ToString()
                 }).ToList();
             }
         }

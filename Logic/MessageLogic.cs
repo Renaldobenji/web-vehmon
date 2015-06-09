@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using Logic.Contracts.Messaging;
+using Logic.HelperLogic;
 using Logic.Interfaces;
 
 namespace Logic
@@ -175,6 +176,15 @@ namespace Logic
                 conversations.conversation.messages.Add(newMessage);
 
                 context.SaveChanges();
+
+                //Push Notificaiton to user
+                new AndroidPushNotifications().PushNotification(
+                        userCurrent.deviceID
+                        ,new Contracts.Notifications.VehmonNotification() { 
+                                NotificationType = "MessageReceived"
+                                ,NotificationPayload = "This is the message Payload" 
+                        }
+                    );
 
                 return messageResponses;
             }
