@@ -149,7 +149,7 @@ namespace Logic
             }
 
             //Push Notificaiton to user
-            new AndroidPushNotifications().PushNotification(
+            /*new AndroidPushNotifications().PushNotification(
                     GetDeviceID(response.GeneratedToken)
                     , new Contracts.Notifications.VehmonNotification()
                     {
@@ -157,7 +157,7 @@ namespace Logic
                         ,
                         NotificationPayload = "This is the message Payload"
                     }
-                );
+                );*/
             
             return response;
         }

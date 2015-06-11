@@ -18,5 +18,8 @@ namespace Logic.Contracts.Leave
 
         [DataMember]
         public String EndDateTime { get; set; }
+
+        [DataMember]
+        public String Status { get; set; }
     }
 }

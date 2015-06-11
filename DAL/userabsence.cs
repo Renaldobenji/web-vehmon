@@ -28,6 +28,8 @@ public partial class userabsence
 
     public System.DateTime toDate { get; set; }
 
+    public Nullable<bool> approved { get; set; }
+
 
 
     public virtual absencetype absencetype { get; set; }

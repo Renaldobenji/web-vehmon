@@ -252,6 +252,7 @@
           <Property Name="absenseTypeID" Type="int" Nullable="false" />
           <Property Name="fromDate" Type="datetime" Nullable="false" />
           <Property Name="toDate" Type="datetime" Nullable="false" />
+          <Property Name="approved" Type="bit" />
         </EntityType>
         <EntityType Name="userconversation">
           <Key>
@@ -711,6 +712,7 @@
           <Property Name="toDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="absencetype" Relationship="vehmonModel.userabsence_ibfk_2" FromRole="userabsence" ToRole="absencetype" />
           <NavigationProperty Name="user" Relationship="vehmonModel.userabsence_ibfk_1" FromRole="userabsence" ToRole="user" />
+          <Property Type="Boolean" Name="approved" />
         </EntityType>
         <Association Name="userabsence_ibfk_2">
           <End Role="absencetype" Type="vehmonModel.absencetype" Multiplicity="1" />
@@ -1152,6 +1154,7 @@
           <EntitySetMapping Name="userabsences">
             <EntityTypeMapping TypeName="vehmonModel.userabsence">
               <MappingFragment StoreEntitySet="userabsence">
+                <ScalarProperty Name="approved" ColumnName="approved" />
                 <ScalarProperty Name="userAbsenseID" ColumnName="userAbsenseID" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="absenseTypeID" ColumnName="absenseTypeID" />

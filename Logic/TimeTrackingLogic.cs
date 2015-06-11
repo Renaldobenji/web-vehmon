@@ -34,12 +34,7 @@ namespace Logic
                 {
                     response.LogState = ShiftLogState.InvalidToken;
                     return response;
-                }
-                if (userCurrent.timetrackings.Any(x => x.clockOutTime == null))
-                {
-                    response.LogState = ShiftLogState.AllreadyInShift;
-                    return response;
-                }
+                }                
                 var newShift = new timetracking
                 {
                     clockInLat = shiftRequest.Lat,
@@ -67,12 +62,7 @@ namespace Logic
                     response.LogState = ShiftLogState.InvalidToken;
                     return response;
                 }
-                var currentShift = userCurrent.timetrackings.FirstOrDefault(x => x.timeTrackingID == shiftId);
-                if (currentShift == null)
-                {
-                    response.LogState = ShiftLogState.NotInShift;
-                    return response;
-                }
+                var currentShift = userCurrent.timetrackings.FirstOrDefault(x => x.timeTrackingID == shiftId);                
                 currentShift.clockOutTime = DateTime.Now;
                 context.SaveChanges();
             }
@@ -94,12 +84,7 @@ namespace Logic
                     return response;
                 }
                 var currentShift = userCurrent.timetrackings.FirstOrDefault(x => x.timeTrackingID == shiftId);
-
-                if (currentShift == null)
-                {
-                    response.LogState = ShiftLogState.NotInShift;
-                    return response;
-                }
+                
                 if (currentShift.routes.Count < 0)
                 {
                     currentShift.routes.Add(new route

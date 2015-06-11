@@ -78,7 +78,8 @@ namespace Logic
                     EndDateTime = x.toDate.ToString("yyyy-MM-dd"),
                     StartDateTime = x.fromDate.ToString("yyyy-MM-dd"),
                     LeaveRequestId = x.userAbsenseID,
-                    LeaveRequestType = ((LeaveRequestTypes)x.absencetype.absenceTypeID).ToString()
+                    LeaveRequestType = ((LeaveRequestTypes)x.absencetype.absenceTypeID).ToString(),
+                    Status = (x.approved.HasValue ? (x.approved.Value == false ? "Declined" : "Approved") : "Pending")
                 }).ToList();
             }
         }
