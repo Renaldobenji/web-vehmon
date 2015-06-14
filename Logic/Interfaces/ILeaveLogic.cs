@@ -14,7 +14,7 @@ namespace Logic.Interfaces
 
         LeaveRequestResponse CancelLeave(Guid userToken, int leaveRequestId);
 
-        List<LeaveRequestContract> GetAllLeaveRequests(Guid userToken);
+        LeaveRequestResponse GetAllLeaveRequests(Guid userToken);
 
         List<LeaveRequestContract> GetAllFutureLeaveRequests(Guid userToken);
     }

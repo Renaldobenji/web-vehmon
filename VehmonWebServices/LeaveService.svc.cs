@@ -38,7 +38,7 @@ namespace VehmonWebServices
             return _leaveLogic.CancelLeave(Guid.Parse(userToken),int.Parse(leaveRequestId));
         }
 
-        public List<LeaveRequestContract> GetAllLeaveRequests(string userToken)
+        public LeaveRequestResponse GetAllLeaveRequests(string userToken)
         {
             return _leaveLogic.GetAllLeaveRequests(Guid.Parse(userToken));
         }

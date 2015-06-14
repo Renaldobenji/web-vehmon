@@ -62,9 +62,9 @@ namespace Logic
             return response;
         }
 
-        public List<LeaveRequestContract> GetAllLeaveRequests(Guid userToken)
+        public LeaveRequestResponse GetAllLeaveRequests(Guid userToken)
         {
-            var response = new List<LeaveRequestContract>();
+            LeaveRequestResponse response = new LeaveRequestResponse();            
             using (var context = new vehmonEntities2())
             {
                 var userCurrent = context.users.FirstOrDefault(x => x.authenticationtokens.Any(a => a.authenticationTokenValue == userToken));
@@ -72,8 +72,10 @@ namespace Logic
                 {
                     return response;
                 }
+
                 var allRequests = userCurrent.userabsences.Where(x => x.absencetype.absenceTypeCode != LeaveRequestTypes.Canceled.ToString()).OrderByDescending(x => x.fromDate).Take(20).ToList();
-                return allRequests.Select(x=>new LeaveRequestContract
+
+                response.LeaveRequests = allRequests.Select(x => new LeaveRequestContract
                 {
                     EndDateTime = x.toDate.ToString("yyyy-MM-dd"),
                     StartDateTime = x.fromDate.ToString("yyyy-MM-dd"),
@@ -81,7 +83,11 @@ namespace Logic
                     LeaveRequestType = ((LeaveRequestTypes)x.absencetype.absenceTypeID).ToString(),
                     Status = (x.approved.HasValue ? (x.approved.Value == false ? "Declined" : "Approved") : "Pending")
                 }).ToList();
+
+                response.AvailableBalance = new Random().Next(30);//This must be replaced
             }
+
+            return response;
         }
 
         public List<LeaveRequestContract> GetAllFutureLeaveRequests(Guid userToken)

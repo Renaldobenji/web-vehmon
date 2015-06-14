@@ -23,7 +23,7 @@ namespace VehmonWebServices
 
         [OperationContract]
         [WebGet(UriTemplate = "GetAllLeaveRequests/{userToken}", ResponseFormat = WebMessageFormat.Json)]
-        List<LeaveRequestContract> GetAllLeaveRequests(string userToken);
+        LeaveRequestResponse GetAllLeaveRequests(string userToken);
 
         [OperationContract]
         [WebGet(UriTemplate = "GetAllFutureLeaveRequests/{userToken}", ResponseFormat = WebMessageFormat.Json)]

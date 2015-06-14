@@ -177,14 +177,23 @@ namespace Logic
 
                 context.SaveChanges();
 
-                //Push Notificaiton to user
-                new AndroidPushNotifications().PushNotification(
-                        userCurrent.deviceID
-                        ,new Contracts.Notifications.VehmonNotification() { 
-                                NotificationType = "MessageReceived"
-                                ,NotificationPayload = "This is the message Payload" 
-                        }
-                    );
+                foreach (var users in allUsersForConversation)
+                {
+                    var user = context.users.FirstOrDefault(x => x.userID == users.userID);
+                    if (user != null && user.userID != userCurrent.userID)
+                    {
+                        //Push Notificaiton to user
+                        new AndroidPushNotifications().PushNotification(
+                                user.deviceID
+                                , new Contracts.Notifications.VehmonNotification()
+                                {
+                                    NotificationType = "MessageReceived"
+                                    ,
+                                    NotificationPayload = "This is the message Payload"
+                                }
+                            );
+                    }
+                }
 
                 return messageResponses;
             }

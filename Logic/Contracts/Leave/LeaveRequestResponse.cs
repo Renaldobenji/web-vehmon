@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Logic.Contracts.Leave
 {
@@ -7,6 +8,12 @@ namespace Logic.Contracts.Leave
     {
         [DataMember]
         public LeaveRequestStatus RequestStatus { get; set; }
+
+        [DataMember]
+        public List<LeaveRequestContract> LeaveRequests { get; set; }
+
+        [DataMember]
+        public int AvailableBalance { get; set; }
 
         [DataMember]
         public int RequestId { get; set; }

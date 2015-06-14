@@ -8,13 +8,14 @@ using System.ServiceModel.Web;
 using System.Text;
 using Logic.Contracts.UserCreation;
 using Logic;
+using System.Diagnostics;
 namespace VehmonWebServices
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Authentication" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select Authentication.svc or Authentication.svc.cs at the Solution Explorer and start debugging.
     //[ServiceBehavior(AddressFilterMode = AddressFilterMode.Any)]
     public class Authentication : IAuthenticationServiceContract
-    {
+    {        
         private IUserLogic _userLogic;
         public Authentication()
         {
@@ -22,13 +23,13 @@ namespace VehmonWebServices
         }
 
         public UserTokenValidationResponse RenewToken(string token)
-        {
-            return _userLogic.RenewToken(Guid.Parse(token));
+        {            
+                return _userLogic.RenewToken(Guid.Parse(token));
         }
 
         public TokenGenerationResult GetTokenForUser(string userName, string password)
-        {
-            return _userLogic.GetTokenForUser(userName, password);
+        {                       
+                return _userLogic.GetTokenForUser(userName, password);            
         }
 
         public UserTokenValidationResponse IsTokenValid(string userName,string token)
