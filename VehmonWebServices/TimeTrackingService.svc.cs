@@ -44,9 +44,10 @@ namespace VehmonWebServices
             });
         }
 
-        public Logic.Contracts.TimeManagement.ShiftResponse EndShift(string userToken, string shiftId)
+        public Logic.Contracts.TimeManagement.ShiftResponse EndShift(string userToken, string shiftId, string endTime)
         {
-            return _timeTrackingLogic.EndShift(Guid.Parse(userToken),int.Parse( shiftId));
+            var datetime = DateTime.ParseExact(endTime.ToString(CultureInfo.InvariantCulture), "yyyy-MM-dd-HH-mm", CultureInfo.InvariantCulture);
+            return _timeTrackingLogic.EndShift(Guid.Parse(userToken), int.Parse(shiftId), datetime);
         }
 
         public Logic.Contracts.TimeManagement.ShiftResponse LogCoordinatesToShift(string userToken, string shiftId, string coords)

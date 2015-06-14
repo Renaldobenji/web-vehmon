@@ -11,7 +11,7 @@ namespace Logic.Interfaces
     {
         ShiftResponse StartShift(ShiftRequestContract shiftRequest);
 
-        ShiftResponse EndShift(Guid userToken, int shiftId);
+        ShiftResponse EndShift(Guid userToken, int shiftId, DateTime endDate);
 
         ShiftResponse LogCoordinatesToShift(Guid userToken, int shiftId, Coordinate[] coordinates);
 

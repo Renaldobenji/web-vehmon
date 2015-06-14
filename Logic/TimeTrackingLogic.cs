@@ -48,7 +48,7 @@ namespace Logic
             return response;
         }
 
-        public ShiftResponse EndShift(Guid userToken, int shiftId)
+        public ShiftResponse EndShift(Guid userToken, int shiftId, DateTime endDate)
         {
             var response = new ShiftResponse();
             response.LogState = ShiftLogState.Success;
@@ -62,8 +62,8 @@ namespace Logic
                     response.LogState = ShiftLogState.InvalidToken;
                     return response;
                 }
-                var currentShift = userCurrent.timetrackings.FirstOrDefault(x => x.timeTrackingID == shiftId);                
-                currentShift.clockOutTime = DateTime.Now;
+                var currentShift = userCurrent.timetrackings.FirstOrDefault(x => x.timeTrackingID == shiftId);
+                currentShift.clockOutTime = endDate;
                 context.SaveChanges();
             }
             return response;

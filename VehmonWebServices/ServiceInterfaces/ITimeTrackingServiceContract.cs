@@ -17,8 +17,8 @@ namespace VehmonWebServices
         ShiftResponse StartShift(string token, string clockInLat, string clockOutLat, string startTime);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "EndShift/{userToken}/{shiftId}", ResponseFormat = WebMessageFormat.Json)]
-        ShiftResponse EndShift(string userToken, string shiftId);
+        [WebInvoke(UriTemplate = "EndShift/{userToken}/{shiftId}/{endDate}", ResponseFormat = WebMessageFormat.Json)]
+        ShiftResponse EndShift(string userToken, string shiftId, string endDate);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "LogCoordinatesToShift/{token}/{shiftId}/{csvCoords}", ResponseFormat = WebMessageFormat.Json)]
