@@ -139,5 +139,29 @@ namespace Logic
                     
             }
         }
+
+        public List<ShiftReportContract> GetUserShifts(Guid token, DateTime startDate, DateTime endDate)
+        {
+            List<ShiftReportContract> respoContracts = new List<ShiftReportContract>();
+            using (var context = new vehmonEntities2())
+            {
+                var userCurrent =
+                    context.users.FirstOrDefault(x => x.authenticationtokens.Any(a => a.authenticationTokenValue == token));
+                if (userCurrent == null)
+                {
+                    return respoContracts;
+                }
+                var minWorked = endDate.Subtract(startDate).Minutes;
+
+               return userCurrent.timetrackings
+                    .Where(x => x.clockInTime >= startDate && x.clockOutTime <= endDate)
+                    .Select(y => new ShiftReportContract()
+                    {
+                        StartDate = y.clockInTime.ToString(),
+                        EndDate = y.clockOutTime.ToString(),
+                        MinutesWorked = y.clockOutTime.Value.Subtract(y.clockInTime).TotalMinutes.ToString()
+                    }).ToList();
+            }            
+        }
     }
 }

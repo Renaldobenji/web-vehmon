@@ -15,6 +15,7 @@ namespace Logic.Interfaces
 
         ShiftResponse LogCoordinatesToShift(Guid userToken, int shiftId, Coordinate[] coordinates);
 
+        List<ShiftReportContract> GetUserShifts(Guid token, DateTime startDate, DateTime endDate);
 
         List<ShiftContract> GetCurrentUserShifts(Guid token);
     }

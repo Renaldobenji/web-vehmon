@@ -39,6 +39,10 @@ namespace TestServices
             //    user.company = user2.company;
             //    context.SaveChanges();
             //}
+            var DatePast = DateTime.Now.AddHours(-7);
+            var futureDate = DateTime.Now;
+            var diffInMin = DatePast.Subtract(futureDate).TotalMinutes;
+
             string time = "2015-11-11-11-11";
             var dateTime = DateTime.ParseExact(time, "yyyy-MM-dd-HH-mm", CultureInfo.InvariantCulture);
             _userLogic = new UserLogic();
@@ -375,7 +379,7 @@ namespace TestServices
         {
             Console.WriteLine("Please enter shift id to end");
             var command = int.Parse(Console.ReadLine());
-            var resutl = _timeTrackingLogic.EndShift(Token, command);
+            var resutl = _timeTrackingLogic.EndShift(Token, command, DateTime.Now);
             Console.WriteLine("Shift ending result is " + resutl.LogState);
 
         }
@@ -453,7 +457,7 @@ namespace TestServices
         private static void GetAllLeaves()
         {
             var allLeaves = _leaveLogic.GetAllLeaveRequests(Token);
-            foreach (var leaveRequestContract in allLeaves)
+            foreach (var leaveRequestContract in allLeaves.LeaveRequests)
             {
                 Console.WriteLine("Leave from " + leaveRequestContract.StartDateTime + " to " + leaveRequestContract.EndDateTime + " leave ID " + leaveRequestContract.LeaveRequestId + " of type " + leaveRequestContract.LeaveRequestType);
             }

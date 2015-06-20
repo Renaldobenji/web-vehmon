@@ -29,6 +29,10 @@ namespace VehmonWebServices
         List<ShiftContract> GetCurrentUserShifts(string token);
 
         [OperationContract]
+        [WebGet(UriTemplate = "GetUserShifts/{token}/{startDate}/{endDate}", ResponseFormat = WebMessageFormat.Json)]
+        List<ShiftReportContract> GetUserShifts(string token, string startDate, string endDate);
+
+        [OperationContract]
         void DoWork();
     }
 }

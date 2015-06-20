@@ -105,6 +105,7 @@
     <Compile Include="Contracts\Notifications\VehmonNotification.cs" />
     <Compile Include="Contracts\TimeManagement\Coordinate.cs" />
     <Compile Include="Contracts\TimeManagement\ShiftContract.cs" />
+    <Compile Include="Contracts\TimeManagement\ShiftReportContract.cs" />
     <Compile Include="Contracts\TimeManagement\ShiftRequestContract.cs" />
     <Compile Include="Contracts\Messaging\ConversationResponse.cs" />
     <Compile Include="Contracts\UserCreation\CompanyResponse.cs" />

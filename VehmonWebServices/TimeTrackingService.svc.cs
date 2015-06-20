@@ -28,6 +28,14 @@ namespace VehmonWebServices
             return _timeTrackingLogic.GetCurrentUserShifts(Guid.Parse(token));
         }
 
+        public List<ShiftReportContract> GetUserShifts(string token, string startDate, string endDate)
+        {
+            var sDate = DateTime.ParseExact(startDate.ToString(CultureInfo.InvariantCulture), "yyyy-MM-dd-HH-mm", CultureInfo.InvariantCulture);
+            var eDate = DateTime.ParseExact(endDate.ToString(CultureInfo.InvariantCulture), "yyyy-MM-dd-HH-mm", CultureInfo.InvariantCulture);
+
+            return _timeTrackingLogic.GetUserShifts(Guid.Parse(token), sDate, eDate);
+        }
+
         public void DoWork()
         {
         }
