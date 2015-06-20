@@ -1,0 +1,47 @@
+﻿@model WehmonWeb.Models.ShiftsModel
+<div class="modal fade" id="truckPartial" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Display Routes On Map</h4>
+            </div>
+            <div id="userModalBody" style="max-height: 800px;overflow-y: scroll" class="modal-body">
+                <div id="tree"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="saveBtn" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).on("ready", function () {
+        function getTree() {
+            @{
+                var json = Json.Encode(Model.ToTreeJson());
+            }
+
+            var tree = @Html.Raw(json);
+            
+                return tree;
+        }
+
+        var tree = $('#tree').treeview({ data: getTree(), multiSelect: true,
+        onNodeSelected: function(event, data) {
+            loadLine(data.routeId);
+        },
+        nodeUnselected : function(event, data) {
+            
+        }
+        }).on("nodeUnselected",function(event, data) {
+
+            removeLine(data.routeId);
+        });
+  
+
+    });
+</script>

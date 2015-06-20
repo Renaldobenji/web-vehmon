@@ -7,8 +7,8 @@ namespace WehmonWeb.Models
 {
     public class Coordinate
     {
-        public double Lat { get; set; }
-        public double Lng { get; set; }
+        public decimal Lat { get; set; }
+        public decimal Lng { get; set; }
         public DateTime Date { get; set; }
     }
 }

@@ -28,21 +28,21 @@ namespace WehmonWeb.Controllers
             {
                 var user = context.users.Single(x => x.userID == userId);
                 var shift = user.timetrackings.OrderByDescending(x => x.clockInTime).FirstOrDefault();//last shift
-                if (shift == null)
+                if (shift == null || !shift.routes.Any())
                 {
-                    result.Add(new Coordinate { Lat = -31.397, Lng = 25.644 + userId, Date = DateTime.Now });
-                    result.Add(new Coordinate { Lat = -31.497, Lng = 25.644 + userId, Date = DateTime.Now });
-                    result.Add(new Coordinate { Lat = -31.597, Lng = 25.644 + userId, Date = DateTime.Now });
-                    result.Add(new Coordinate { Lat = -31.697, Lng = 25.644 + userId, Date = DateTime.Now });
-                    result.Add(new Coordinate { Lat = -31.797, Lng = 25.644 + userId, Date = DateTime.Now });
-                    result.Add(new Coordinate { Lat = -31.897, Lng = 25.644 + userId, Date = DateTime.Now });
-                    result.Add(new Coordinate { Lat = -31.997, Lng = 25.644 + userId, Date = DateTime.Now });
+                    result.Add(new Coordinate { Lat = (decimal)-31.397, Lng = (decimal)25.644 + userId, Date = DateTime.Now });
+                    result.Add(new Coordinate { Lat = (decimal)-31.497, Lng = (decimal)25.644 + userId, Date = DateTime.Now });
+                    result.Add(new Coordinate { Lat = (decimal)-31.597, Lng = (decimal)25.644 + userId, Date = DateTime.Now });
+                    result.Add(new Coordinate { Lat = (decimal)-31.697, Lng = (decimal)25.644 + userId, Date = DateTime.Now });
+                    result.Add(new Coordinate { Lat = (decimal)-31.797, Lng = (decimal)25.644 + userId, Date = DateTime.Now });
+                    result.Add(new Coordinate { Lat = (decimal)-31.897, Lng = (decimal)25.644 + userId, Date = DateTime.Now });
+                    result.Add(new Coordinate { Lat = (decimal)-31.997, Lng = (decimal)25.644 + userId, Date = DateTime.Now });
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
                 result = shift.routes.Single().coords.OrderByDescending(c => c.time).Take(7).ToList().Select(x => new Coordinate
                 {
-                    Lat = Convert.ToDouble(x.lat.Value),
-                    Lng = Convert.ToDouble(x.lng.Value),
+                    Lat = x.lat.Value,
+                    Lng =x.lng.Value,
                     Date = x.time
                 }).ToList();
                 return Json(result, JsonRequestBehavior.AllowGet);
@@ -82,7 +82,7 @@ namespace WehmonWeb.Controllers
                 var splitVals = coordinates.Split(","[0]);
                 for (var i = 0; i < splitVals.Length; i += 3)
                 {
-                    coordinateList.Add(new Coordinate { Lat = double.Parse(splitVals[i]), Lng = double.Parse(splitVals[i + 1]) });
+                    coordinateList.Add(new Coordinate { Lat = decimal.Parse(splitVals[i]), Lng = decimal.Parse(splitVals[i + 1]) });
                 }
                 var tokenFound = context.authenticationtokens.FirstOrDefault(x => x.authenticationTokenValue == token);
                 if (tokenFound == null)

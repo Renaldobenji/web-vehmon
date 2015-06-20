@@ -191,6 +191,7 @@
     <Compile Include="Controllers\CoordinatesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MapsController.cs" />
     <Compile Include="Filters\CustomMembershipProvider .cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -209,14 +210,19 @@
     <Compile Include="Models\LeaveModel.cs" />
     <Compile Include="Models\MapsStartupModel.cs" />
     <Compile Include="Models\MessageModel.cs" />
+    <Compile Include="Models\ShiftEntryModel.cs" />
+    <Compile Include="Models\ShiftModel.cs" />
+    <Compile Include="Models\ShiftsModel.cs" />
     <Compile Include="Models\UserScreenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\bootstrap-datepicker3.css" />
     <Content Include="Content\css\bootstrap-rtl.css" />
     <Content Include="Content\css\bootstrap-rtl.min.css" />
     <Content Include="Content\css\bootstrap-theme.css" />
     <Content Include="Content\css\bootstrap-theme.min.css" />
+    <Content Include="Content\css\bootstrap-treeview.min.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\carousel.css" />
@@ -354,6 +360,8 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\bloodhound.js" />
     <Content Include="Scripts\bloodhound.min.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-treeview.min.js" />
     <Content Include="Scripts\bootstrap3-typeahead.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -444,6 +452,8 @@
     <Content Include="Views\Coordinates\_TrucksDasboard.cshtml" />
     <Content Include="Views\Dashboard\_leaveView.cshtml" />
     <Content Include="Views\Dashboard\LeaveView.cshtml" />
+    <Content Include="Views\Maps\_RenderShiftTreeView.cshtml" />
+    <Content Include="Views\Dashboard\DisplayShifts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

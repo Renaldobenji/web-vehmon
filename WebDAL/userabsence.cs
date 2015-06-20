@@ -19,6 +19,7 @@ namespace WebDAL
         public int absenseTypeID { get; set; }
         public System.DateTime fromDate { get; set; }
         public System.DateTime toDate { get; set; }
+        public bool approved { get; set; }
     
         public virtual absencetype absencetype { get; set; }
         public virtual user user { get; set; }

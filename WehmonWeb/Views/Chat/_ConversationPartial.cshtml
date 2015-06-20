@@ -1,18 +1,12 @@
 ﻿@model WehmonWeb.Models.ChatModel
+<div class="modal fade" id="ChatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-<div style="position: fixed;margin-top: -40px" class="col-lg-3 col-md-offset-4">
-    <div style="" class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div id="chatHeading" class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Conversations</a>
-                    <button onclick="addConv()" style="margin-left: 15px;margin-top: -8px" type="button" class="btn btn-default btn-xs">Add New</button>
-                </h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse">
+            <div id="userModalBody"  class="modal-body">
 
-                <!-- /.panel-heading -->
-                <div class="panel-body">
+                   
+
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
                         @foreach (var conversation in Model.ConversationModels)
@@ -37,7 +31,7 @@
                                         <i class="fa fa-comments fa-fw"></i>
                                         Chat
                                        
-                                        <button onclick="setUserPartial(@conv.ID)" type="button" class="btn" data-toggle="modal" data-target="#userModal">
+                                        <button style="margin-left: 350px" onclick="setUserPartial(@conv.ID)" type="button" class="btn" data-toggle="modal" data-target="#userModal">
                                             People
                                         </button>
                                     </div>
@@ -69,12 +63,10 @@
              
                         }
                     </div>
-                </div>
-            </div>
+                            </div>
+            
         </div>
     </div>
-
-    <!-- /.panel -->
 </div>
 
 

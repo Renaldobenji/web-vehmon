@@ -17,13 +17,17 @@
     <link href="@Url.Content("~/Content/css/sb-admin.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/css/sb-admin-2.css.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/css/plugins/morris.css")" rel="stylesheet">
+    <link href="@Url.Content("~/Content/css/bootstrap-datepicker3.css")" rel="stylesheet">
 
     <script src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"></script>
     <script src="@Url.Content("~/Scripts/js/bootstrap.js")"></script>
     <script src="@Url.Content("~/Scripts/jssor.slider.mini.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap3-typeahead.js")"></script>
     <link href="@Url.Content("~/Content/css/font-awesome.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/Content/css/bootstrap-treeview.min.css")" rel="stylesheet" type="text/css">
     <script src="@Url.Content("~/Scripts/jquery.signalR-1.2.2.js")"></script>
+       <script src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap-treeview.min.js")"></script>
     <script src="~/signalr/hubs" type="text/javascript"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -97,7 +101,7 @@
                 var userSel = curAction == "UserManagement" ? "active" : "";
                 var mapsSel = curAction == "MapsDashboard" ? "active" : "";
                 var leaveSel = curAction == "DisplayLeave" ? "active" : "";
-                
+                var shiftSel = curAction == "DisplayShifts" ? "active" : "";
             }
             <div class="collapse navbar-collapse navbar-ex1-collapse ">
                 <ul class="nav navbar-nav side-nav  ">
@@ -113,13 +117,17 @@
                     <li class="@leaveSel">
                         <a href="@Url.Action("DisplayLeave", "Dashboard")"><i class="fa fa-fw fa-map-marker"></i>Leave Requests</a>
                     </li>
+                    <li class="@shiftSel">
+                        <a href="@Url.Action("DisplayShifts", "Dashboard")"><i class="fa fa-fw fa-map-marker"></i>Display Shifts</a>
+                    </li>
                     <li class="@mapsSel">
                         <a href="@Url.Action("MapsDashboard", "Dashboard")"><i class="fa fa-fw fa-map-marker"></i>Map Dashboard</a>
                     </li>
 
                 </ul>
+               
             </div>
-            <!-- /.navbar-collapse -->
+             
         </nav>
 
         <div style="height: 100%" id="page-wrapper" class="pull-right">

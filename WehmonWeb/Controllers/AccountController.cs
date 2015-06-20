@@ -32,7 +32,8 @@ namespace WehmonWeb.Controllers
         [AllowAnonymous]
         public ActionResult Login(string userName,String password, string returnUrl)
         {
-            if (Membership.ValidateUser(userName, password))
+            var isValid = Membership.ValidateUser(userName, password);
+            if (isValid)
             {
                 FormsAuthentication.SetAuthCookie(userName, false);
                 return RedirectToAction("Index","Home");

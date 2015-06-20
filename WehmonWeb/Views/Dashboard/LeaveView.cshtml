@@ -1,9 +1,53 @@
-﻿@model List<WehmonWeb.Models.LeaveModel>
+﻿@using System.Web.UI.WebControls
+@model List<WehmonWeb.Models.LeaveModel>
 @{
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
-<h2>Booked Leave</h2>
+<div class="row">
+    <div class="col-md-6">
+        <h2 style="margin-top: 10px" class="pull-left">Booked Leave</h2>
+        <button style="margin-top: 10px; margin-left: 20px" type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#createLeaveModal">
+            Add Leave
+        </button>
+    </div>
 
+    <div class="col-md-6">
+        <div class="pull-right">
+            @if (!ViewBag.showAll)
+            {
+                <a style="margin-top: 6px" href="@Url.Action("DisplayLeave", new { pageNumber = 1, showAll = true, userId = ViewBag.CurrentUser })" class="btn btn-default pull-right">
+                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Show All
+                </a>
+            }
+            else
+            {
+                <a style="margin-top: 6px" href="@Url.Action("DisplayLeave", new { pageNumber = 1, showAll = false, userId = ViewBag.CurrentUser })" class="btn btn-default pull-right">
+                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Show Only Not Processed
+                </a>
+            }
+        </div>
+        <div style="padding-bottom: 5px; padding-top: 5px" class="pull-right well">
+            <form action="@Url.Action("DisplayLeave", new { pageNumber = ViewBag.CurrentPage, showAll = ViewBag.showAll })" method="GET" class="form-inline">
+                <div class="form-group">
+                    <label for="userDropDown">User Name:</label>
+                    <select name="userId" style="min-width: 250px" size="1" id="userDropDown" class="form-control ">
+                        @foreach (var i in (List<KeyValuePair<int, string>>)ViewBag.Users)
+                        {
+                            var selected = "";
+                            if (i.Key == (int)ViewBag.CurrentUser)
+                            {
+                                selected = "selected";
+                            }
+                            <option @selected value="@i.Key">@i.Value</option>
+                        }
+                    </select>
+                    <input type="submit" class="btn btn-primary" value="Set User" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
 @if (Model.Count < 1)
 {
     <h3>You have no current leave requests to display!</h3>
@@ -16,7 +60,9 @@ else
             <th>From Date</th>
             <th>To Date</th>
             <th>Leave Type</th>
-
+            <th>Approved</th>
+            <th>Approve</th>
+            <th>Reject</th>
         </tr>
         @{
     foreach (var leaveModel in Model)
@@ -26,16 +72,138 @@ else
                     @leaveModel.UserName
                 </td>
                 <td>
-                    @leaveModel.FromDate
+                    @leaveModel.FromDate.ToString("dd/MM/yyyy")
                 </td>
                 <td>
-                    @leaveModel.ToDate
+                    @leaveModel.ToDate.ToString("dd/MM/yyyy")
                 </td>
                 <td>
                     @leaveModel.LeaveType
+                </td>
+                <td>
+                    @if (leaveModel.IsApproved)
+                    {
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("ApproveLeave", new { leaveId = leaveModel.LeaveId, pageNumber = ViewBag.CurrentPage, showAll = ViewBag.showAll, userId = ViewBag.CurrentUser })" class="">Click To Approve</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("RejectLeave", new { leaveId = leaveModel.LeaveId, pageNumber = ViewBag.CurrentPage, showAll = ViewBag.showAll, userId = ViewBag.CurrentUser })" class="">Click To Reject</a>
                 </td>
             </tr>
     }
         }
     </table>
 }
+<div style="margin-top: -20px" class="pull-right">
+    <nav>
+        <ul class="pagination">
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="@Url.Action("DisplayLeave", new { pageNumber = ViewBag.CurrentPage - 1, showAll = ViewBag.showAll, userId = ViewBag.CurrentUser })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            @for (var i = ViewBag.CurrentPage - 3; i < ViewBag.CurrentPage + 6; i++)
+            {
+                var active = "";
+                if (ViewBag.CurrentPage == i) { active = "active"; }
+                if (i > 0 && i <= ViewBag.PageCount + 1)
+                {
+                <li class="@active"><a href="@Url.Action("DisplayLeave", new { pageNumber = i, showAll = ViewBag.showAll, userId = ViewBag.CurrentUser })">@i</a></li>
+                }
+            }
+            @if (ViewBag.CurrentPage <= ViewBag.PageCount)
+            {
+                <li>
+                    <a href="@Url.Action("DisplayLeave", new { pageNumber = ViewBag.CurrentPage + 1, showAll = ViewBag.showAll, userId = ViewBag.CurrentUser })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="@Url.Action("CreateLeaveRequest", new { userId =ViewBag.CurrentUser, pageNumber = ViewBag.CurrentPage, showAll = ViewBag.showAll })" method="GET" class="form-horizontal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Create Leave</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">User</label>
+                        <div class="col-sm-8">
+                            <select name="leaveUserId" style="" size="1" id="" class="form-control ">
+                                @foreach (var i in (List<KeyValuePair<int, string>>)ViewBag.Users)
+                                {
+                                    if (i.Key > 0)
+                                    {
+                                    <option  value="@i.Key">@i.Value</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Leave Type</label>
+                        <div class="col-sm-8">
+                            <select name="leaveTypeId" style="" size="1" id="" class="form-control ">
+                                @foreach (var i in (List<KeyValuePair<int, string>>)ViewBag.LeaveTypes)
+                                {
+                                    if (i.Key > 0)
+                                    {
+                                    <option  value="@i.Key">@i.Value</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">From Date</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+                                <input name="startDate" type="text" class="form-control datepicker" id="startDate" placeholder="dd/mm/yyy">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">To Date</label>
+                        <div class="col-sm-8">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+                                    <input name="endDate" type="text" class="form-control datepicker" id="endDate" placeholder="dd/mm/yyy">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" value="Create Leave" class="btn btn-primary "/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            orientation: "top",
+            container: "#createLeaveModal"
+        });
+    });
+</script>

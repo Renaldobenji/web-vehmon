@@ -1,0 +1,152 @@
+﻿@model WehmonWeb.Models.ShiftModel
+@{
+    ViewBag.Title = "DisplayShifts";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+<div class="row">
+    <div class="col-md-2">
+        <h2 style="margin-top: 10px" class="pull-left">Display Shifts</h2>
+    </div>
+    <div class="col-md-10">
+
+        <div class="pull-right  col-md-5">
+            <form action="@Url.Action("DisplayShifts", new { pageNumber = ViewBag.CurrentPage, ViewBag.startDate, ViewBag.endDate })" method="GET" class="form-inline">
+                <div style="padding-bottom: 5px; padding-top: 5px" class="form-group well pull-right">
+                    <div class="row">
+                        <input type="hidden" name="endDate" value="@ViewBag.endDate"/>
+                        <input type="hidden" name="startDate" value="@ViewBag.startDate"/>
+                        <label for="userDropDown">User Name:</label>
+                        <select name="userId" size="1" id="userDropDown" class="form-control ">
+                            @foreach (var i in (List<KeyValuePair<int, string>>)ViewBag.Users)
+                            {
+                                var selected = "";
+                                if (i.Key == (int)ViewBag.CurrentUser)
+                                {
+                                    selected = "selected";
+                                }
+                                <option @selected value="@i.Key">@i.Value</option>
+                            }
+                        </select>
+                        <input type="submit" class="btn btn-primary btn-sm" value="Set User" />
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        @if (ViewBag.CurrentUser > 0)
+        {
+            <div style="padding-bottom: 5px; padding-top: 5px" class="pull-right well col-md-7">
+                <form action="@Url.Action("DisplayShifts")" method="GET" class="form-inline">
+                    <div class="form-group">
+                        <input type="hidden" name="userId" value="@ViewBag.CurrentUser"/>
+                        <div class="col-sm-12">
+                            <div id="dateContainer" class="input-group">
+                                <div style="font-weight: bold; padding: 0px" class="input-group-addon">
+                                    <input type="submit" class="btn btn-success btn-sm" value="Filter" /></div>
+                                <div class="input-group-addon">From</div>
+                                <input value="@ViewBag.startDate" name="startDate" type="text" class="form-control datepicker" id="startDate" placeholder="dd/mm/yyy">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+                                <input value="@ViewBag.endDate" name="endDate" type="text" class="form-control datepicker" id="endDate" placeholder="dd/mm/yyy">
+                                <div class="input-group-addon">Until</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+           
+        }
+    </div>
+</div>
+@if (Model.EntryModels.Count < 1)
+{
+    <h3>You have no current leave requests to display!</h3>
+}
+else
+{
+    if (ViewBag.CurrentUser > 0)
+    {
+         <p style="margin-top: -15px">A total of @Math.Round(Model.TotalHours,2) hours has been worked</p>
+    }
+    <table class="table table-striped">
+        <tr>
+            <th>User Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Hours Worked</th>
+            <th>Start Day</th>
+            <th>End Day</th>
+            <th>Map</th>
+        </tr>
+        @foreach (var entry in Model.EntryModels)
+        {
+            <tr>
+                <td>
+                    @entry.User.Value
+                </td>
+                <td>
+                    @entry.ClockInDate
+                </td>
+                <td>
+                    @entry.ClockOutDate
+                </td>
+                <td>
+                    @Math.Round(entry.HoursWorked, 2)
+                </td>
+                <td>
+                    @entry.ClockInDate.DayOfWeek
+                </td>
+                <td>
+                    @if (entry.ClockOutDate != null)
+                    {
+                        @entry.ClockOutDate.Value.DayOfWeek
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("MapsDashboard", new { shiftId = entry.ShiftId })"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+<div style="margin-top: -20px" class="pull-right">
+    <nav>
+        <ul class="pagination">
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="@Url.Action("DisplayShifts", new { pageNumber = ViewBag.CurrentPage - 1, userId = ViewBag.CurrentUser, ViewBag.startDate, ViewBag.endDate })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            @for (var i = ViewBag.CurrentPage - 3; i < ViewBag.CurrentPage + 6; i++)
+            {
+                var active = "";
+                if (ViewBag.CurrentPage == i) { active = "active"; }
+                if (i > 0 && i <= ViewBag.PageCount + 1)
+                {
+                <li class="@active"><a href="@Url.Action("DisplayShifts", new { pageNumber = i, userId = ViewBag.CurrentUser, ViewBag.startDate, ViewBag.endDate })">@i</a></li>
+                }
+            }
+            @if (ViewBag.CurrentPage <= ViewBag.PageCount)
+            {
+                <li>
+                    <a href="@Url.Action("DisplayShifts", new { pageNumber = ViewBag.CurrentPage + 1, userId = ViewBag.CurrentUser, ViewBag.startDate, ViewBag.endDate })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            orientation: "top",
+            container: "#dateContainer"
+        });
+    });
+</script>
