@@ -10,6 +10,7 @@ using Microsoft.Ajax.Utilities;
 using WebDAL;
 using WehmonWeb.Models;
 using WebLogic.Helpers;
+using WebLogic.Contracts;
 
 namespace WehmonWeb.Controllers
 {
@@ -122,9 +123,19 @@ namespace WehmonWeb.Controllers
         {
             using (var context = new vehmonEntities())
             {
-                var leave = context.userabsences.Single(x => x.userAbsenseID == leaveId);
+                var leave = context.userabsences.Single(x => x.userAbsenseID == leaveId);                
                 leave.approved = true;
                 context.SaveChanges();
+
+                //Send Notification                
+                new AndroidPushNotifications().PushNotification(
+                            leave.user.deviceID
+                            , new VehmonNotification()
+                            {
+                                NotificationType = "Leave",
+                                NotificationPayload = "Your Leave has been approved"
+                            }
+                        );
             }
             return RedirectToAction("DisplayLeave", new { pageNumber, showAll, userId });
         }
@@ -136,6 +147,16 @@ namespace WehmonWeb.Controllers
                 var leave = context.userabsences.Single(x => x.userAbsenseID == leaveId);
                 context.userabsences.Remove(leave);
                 context.SaveChanges();
+
+                //Send Notification                
+                new AndroidPushNotifications().PushNotification(
+                            leave.user.deviceID
+                            , new VehmonNotification()
+                            {
+                                NotificationType = "Leave",
+                                NotificationPayload = "Your Leave has been Rejected"
+                            }
+                        );
             }
             return RedirectToAction("DisplayLeave", new { pageNumber, showAll, userId });
         }

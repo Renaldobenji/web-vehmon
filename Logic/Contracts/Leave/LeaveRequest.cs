@@ -11,16 +11,6 @@ namespace Logic.Contracts.Leave
         [DataMember]
         public DateTime EndTime { get; set; }
         [DataMember]
-        public LeaveRequestTypes LeaveRequestType { get; set; }
-    }
-
-    public enum LeaveRequestTypes
-    {
-        [EnumMember(Value = "Annual")]
-        Annual,
-        [EnumMember(Value = "Sick")]
-        Sick,
-        [EnumMember(Value = "Canceled")]
-        Canceled
+        public String LeaveRequestType { get; set; }
     }
 }

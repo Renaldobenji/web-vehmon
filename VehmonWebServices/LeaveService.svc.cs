@@ -29,7 +29,7 @@ namespace VehmonWebServices
             {
                 EndTime = DateTime.ParseExact(endTime, "yyyy-MM-dd-HH-mm", CultureInfo.InvariantCulture),
                 StartTime = DateTime.ParseExact(startTime, "yyyy-MM-dd-HH-mm", CultureInfo.InvariantCulture),
-                LeaveRequestType = (LeaveRequestTypes)Enum.Parse(typeof(LeaveRequestTypes), leaveRequestType)
+                LeaveRequestType = leaveRequestType
             });
         }
 

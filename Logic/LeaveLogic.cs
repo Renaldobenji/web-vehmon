@@ -23,7 +23,7 @@ namespace Logic
                     response.RequestStatus = LeaveRequestStatus.InvalidToken;
                     return response;
                 }
-                var leaveType = context.absencetypes.FirstOrDefault(x => x.absenceTypeCode == leaveRequest.LeaveRequestType.ToString());
+                var leaveType = context.absencetypes.FirstOrDefault(x => x.absenceTypeCode == leaveRequest.LeaveRequestType);
                 var newLeave = new userabsence
                 {
                     absencetype = leaveType,
@@ -55,7 +55,7 @@ namespace Logic
                     response.RequestStatus = LeaveRequestStatus.LeaveNotFound;
                     return response;
                 }
-                var leaveType = context.absencetypes.FirstOrDefault(x => x.absenceTypeCode == LeaveRequestTypes.Canceled.ToString());
+                var leaveType = context.absencetypes.FirstOrDefault(x => x.absenceTypeCode == leave.absencetype.absenceTypeCode);
                 leave.absencetype = leaveType;
                 context.SaveChanges();
             }
@@ -73,18 +73,18 @@ namespace Logic
                     return response;
                 }
 
-                var allRequests = userCurrent.userabsences.Where(x => x.absencetype.absenceTypeCode != LeaveRequestTypes.Canceled.ToString()).OrderByDescending(x => x.fromDate).Take(20).ToList();
+                var allRequests = userCurrent.userabsences.Where(x => x.absencetype.absenceTypeCode != "Canceled").OrderByDescending(x => x.fromDate).Take(20).ToList();
 
                 response.LeaveRequests = allRequests.Select(x => new LeaveRequestContract
                 {
                     EndDateTime = x.toDate.ToString("yyyy-MM-dd"),
                     StartDateTime = x.fromDate.ToString("yyyy-MM-dd"),
                     LeaveRequestId = x.userAbsenseID,
-                    LeaveRequestType = ((LeaveRequestTypes)x.absencetype.absenceTypeID).ToString(),
+                    LeaveRequestType = x.absencetype.absenceTypeCode,
                     Status = (x.approved.HasValue ? (x.approved.Value == false ? "Declined" : "Approved") : "Pending")
                 }).ToList();
 
-                response.AvailableBalance = new Random().Next(30);//This must be replaced
+                response.AvailableBalance = 0;//This must be replaced
             }
 
             return response;
@@ -106,7 +106,7 @@ namespace Logic
                     EndDateTime = x.toDate.ToShortDateString(),
                     StartDateTime = x.fromDate.ToShortDateString(),
                     LeaveRequestId = x.absenseTypeID,
-                    LeaveRequestType = ((LeaveRequestTypes)x.absencetype.absenceTypeID).ToString()
+                    LeaveRequestType = x.absencetype.absenceTypeCode
                 }).ToList();
             }
         }

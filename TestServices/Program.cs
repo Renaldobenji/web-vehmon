@@ -470,7 +470,7 @@ namespace TestServices
             {
                 StartTime = DateTime.Now.Add(TimeSpan.FromDays(1)),
                 EndTime = DateTime.Now.Add(TimeSpan.FromDays(2)),
-                LeaveRequestType = LeaveRequestTypes.Annual
+                LeaveRequestType = "Annual"
             });
             Console.WriteLine("Leave status " + restult.RequestStatus);
 
