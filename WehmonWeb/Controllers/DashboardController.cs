@@ -131,7 +131,7 @@ namespace WehmonWeb.Controllers
                 context.userabsencebalances.Add(new userabsencebalance()
                 {
                     userID = leave.userId,
-                    amount = amountOfDays,
+                    amount = amountOfDays * -1,
                     datestamp = DateTime.Now                   
                 });
                 context.SaveChanges();
@@ -154,8 +154,8 @@ namespace WehmonWeb.Controllers
             using (var context = new vehmonEntities())
             {
                 var leave = context.userabsences.Single(x => x.userAbsenseID == leaveId);
+
                 context.userabsences.Remove(leave);
-                context.SaveChanges();
 
                 //Send Notification                
                 new AndroidPushNotifications().PushNotification(
@@ -166,6 +166,9 @@ namespace WehmonWeb.Controllers
                                 NotificationPayload = "Your Leave has been Rejected"
                             }
                         );
+                context.SaveChanges();
+
+                
             }
             return RedirectToAction("DisplayLeave", new { pageNumber, showAll, userId });
         }
@@ -204,9 +207,8 @@ namespace WehmonWeb.Controllers
                         .ToList();
                 }
                 else
-                {
-                    leaves = leaves.Where(x => !x.approved.Value);
-                    ViewBag.PageCount = (int)Math.Ceiling((double)(leaves.Count(x => !x.approved.Value) / pageSize));
+                {                    
+                    ViewBag.PageCount = (int)Math.Ceiling((double)(leaves.Count() / pageSize));
 
                     leaves = leaves
                         .Skip((pageNumber - 1) * pageSize)
@@ -218,11 +220,11 @@ namespace WehmonWeb.Controllers
                     UserName = x.user.username,
                     ToDate = x.toDate,
                     FromDate = x.fromDate,
-                    IsApproved = x.approved.Value,
+                    IsApproved = (x.approved.HasValue ? x.approved.Value : false),
                     UserId = x.userId,
                     LeaveId = x.userAbsenseID,
                     LeaveType = x.absencetype.absenceTypeCode
-                }).ToList();
+                }).OrderByDescending(x => x.LeaveId).ToList();
             }
             return View("LeaveView", models);
         }
