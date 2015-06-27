@@ -41,6 +41,8 @@
         <AssociationConnector Association="vehmonModel.userrolemapping_ibfk_1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="vehmonModel.company" Width="1.5" PointX="0.75" PointY="17.875" />
         <AssociationConnector Association="vehmonModel.users_ibfk_1" />
+        <EntityTypeShape EntityType="vehmonModel.userabsencebalance" Width="1.5" PointX="8.2516116147169889" PointY="9.4002135439776886" />
+        <AssociationConnector Association="vehmonModel.userID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

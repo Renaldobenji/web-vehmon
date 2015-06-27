@@ -22,6 +22,7 @@
           <EntitySet Name="route" EntityType="vehmonModel.Store.route" store:Type="Tables" Schema="vehmon" />
           <EntitySet Name="timetracking" EntityType="vehmonModel.Store.timetracking" store:Type="Tables" Schema="vehmon" />
           <EntitySet Name="userabsence" EntityType="vehmonModel.Store.userabsence" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="userabsencebalance" EntityType="vehmonModel.Store.userabsencebalance" store:Type="Tables" Schema="vehmon" />
           <EntitySet Name="userconversation" EntityType="vehmonModel.Store.userconversation" store:Type="Tables" Schema="vehmon" />
           <EntitySet Name="usermessagereceipt" EntityType="vehmonModel.Store.usermessagereceipt" store:Type="Tables" Schema="vehmon" />
           <EntitySet Name="userrolemapping" EntityType="vehmonModel.Store.userrolemapping" store:Type="Tables" Schema="vehmon" />
@@ -69,6 +70,10 @@
           <AssociationSet Name="userconversation_ibfk_2" Association="vehmonModel.Store.userconversation_ibfk_2">
             <End Role="users" EntitySet="users" />
             <End Role="userconversation" EntitySet="userconversation" />
+          </AssociationSet>
+          <AssociationSet Name="userID" Association="vehmonModel.Store.userID">
+            <End Role="users" EntitySet="users" />
+            <End Role="userabsencebalance" EntitySet="userabsencebalance" />
           </AssociationSet>
           <AssociationSet Name="usermessagereceipt_ibfk_1" Association="vehmonModel.Store.usermessagereceipt_ibfk_1">
             <End Role="users" EntitySet="users" />
@@ -253,6 +258,15 @@
           <Property Name="fromDate" Type="datetime" Nullable="false" />
           <Property Name="toDate" Type="datetime" Nullable="false" />
           <Property Name="approved" Type="bit" />
+        </EntityType>
+        <EntityType Name="userabsencebalance">
+          <Key>
+            <PropertyRef Name="iduserabsencebalanceID" />
+          </Key>
+          <Property Name="iduserabsencebalanceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="amount" Type="decimal" Nullable="false" Precision="5" />
+          <Property Name="datestamp" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="userconversation">
           <Key>
@@ -440,6 +454,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="userID">
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
+          <End Role="userabsencebalance" Type="vehmonModel.Store.userabsencebalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userabsencebalance">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="usermessagereceipt_ibfk_1">
           <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
           <End Role="usermessagereceipt" Type="vehmonModel.Store.usermessagereceipt" Multiplicity="*" />
@@ -588,6 +614,11 @@
           <AssociationSet Name="userrolemapping_ibfk_1" Association="vehmonModel.userrolemapping_ibfk_1">
             <End Role="user" EntitySet="users" />
             <End Role="userrolemapping" EntitySet="userrolemappings" />
+          </AssociationSet>
+          <EntitySet Name="userabsencebalances" EntityType="vehmonModel.userabsencebalance" />
+          <AssociationSet Name="userID" Association="vehmonModel.userID">
+            <End Role="user" EntitySet="users" />
+            <End Role="userabsencebalance" EntitySet="userabsencebalances" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="absencetype">
@@ -922,6 +953,7 @@
           <NavigationProperty Name="userconversations" Relationship="vehmonModel.userconversation_ibfk_2" FromRole="user" ToRole="userconversation" />
           <NavigationProperty Name="usermessagereceipts" Relationship="vehmonModel.usermessagereceipt_ibfk_1" FromRole="user" ToRole="usermessagereceipt" />
           <NavigationProperty Name="userrolemappings" Relationship="vehmonModel.userrolemapping_ibfk_1" FromRole="user" ToRole="userrolemapping" />
+          <NavigationProperty Name="userabsencebalances" Relationship="vehmonModel.userID" FromRole="user" ToRole="userabsencebalance" />
         </EntityType>
         <Association Name="auditentry_ibfk_1">
           <End Type="vehmonModel.user" Role="user" Multiplicity="1" />
@@ -1027,6 +1059,28 @@
               <PropertyRef Name="userID" />
             </Principal>
             <Dependent Role="userrolemapping">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="userabsencebalance">
+          <Key>
+            <PropertyRef Name="iduserabsencebalanceID" />
+          </Key>
+          <Property Type="Int32" Name="iduserabsencebalanceID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="Decimal" Name="amount" Nullable="false" Precision="5" Scale="0" />
+          <Property Type="DateTime" Name="datestamp" Nullable="false" Precision="0" />
+          <NavigationProperty Name="user" Relationship="vehmonModel.userID" FromRole="userabsencebalance" ToRole="user" />
+        </EntityType>
+        <Association Name="userID">
+          <End Type="vehmonModel.user" Role="user" Multiplicity="1" />
+          <End Type="vehmonModel.userabsencebalance" Role="userabsencebalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userabsencebalance">
               <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1271,6 +1325,16 @@
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="companyID" ColumnName="companyID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userabsencebalances">
+            <EntityTypeMapping TypeName="vehmonModel.userabsencebalance">
+              <MappingFragment StoreEntitySet="userabsencebalance">
+                <ScalarProperty Name="datestamp" ColumnName="datestamp" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="iduserabsencebalanceID" ColumnName="iduserabsencebalanceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

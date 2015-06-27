@@ -37,6 +37,8 @@ public partial class user
 
         this.userrolemappings = new HashSet<userrolemapping>();
 
+        this.userabsencebalances = new HashSet<userabsencebalance>();
+
     }
 
 
@@ -101,6 +103,8 @@ public partial class user
     public virtual ICollection<usermessagereceipt> usermessagereceipts { get; set; }
 
     public virtual ICollection<userrolemapping> userrolemappings { get; set; }
+
+    public virtual ICollection<userabsencebalance> userabsencebalances { get; set; }
 
 }
 

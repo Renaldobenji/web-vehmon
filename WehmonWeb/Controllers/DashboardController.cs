@@ -123,8 +123,17 @@ namespace WehmonWeb.Controllers
         {
             using (var context = new vehmonEntities())
             {
-                var leave = context.userabsences.Single(x => x.userAbsenseID == leaveId);                
+                var leave = context.userabsences.Single(x => x.userAbsenseID == leaveId);
+
+                var amountOfDays = leave.toDate.Subtract(leave.fromDate).Days + 1;
                 leave.approved = true;
+
+                context.userabsencebalances.Add(new userabsencebalance()
+                {
+                    userID = leave.userId,
+                    amount = amountOfDays,
+                    datestamp = DateTime.Now                   
+                });
                 context.SaveChanges();
 
                 //Send Notification                
@@ -185,6 +194,7 @@ namespace WehmonWeb.Controllers
                     leaves = leaves.Where(x => x.userId == userId);
                 }
                 if (showAll)
+
                 {
                     ViewBag.PageCount = (int)Math.Ceiling((double)(leaves.Count() / pageSize));
 
@@ -195,8 +205,8 @@ namespace WehmonWeb.Controllers
                 }
                 else
                 {
-                    leaves = leaves.Where(x => !x.approved);
-                    ViewBag.PageCount = (int)Math.Ceiling((double)(leaves.Count(x => !x.approved) / pageSize));
+                    leaves = leaves.Where(x => !x.approved.Value);
+                    ViewBag.PageCount = (int)Math.Ceiling((double)(leaves.Count(x => !x.approved.Value) / pageSize));
 
                     leaves = leaves
                         .Skip((pageNumber - 1) * pageSize)
@@ -208,7 +218,7 @@ namespace WehmonWeb.Controllers
                     UserName = x.user.username,
                     ToDate = x.toDate,
                     FromDate = x.fromDate,
-                    IsApproved = x.approved,
+                    IsApproved = x.approved.Value,
                     UserId = x.userId,
                     LeaveId = x.userAbsenseID,
                     LeaveType = x.absencetype.absenceTypeCode

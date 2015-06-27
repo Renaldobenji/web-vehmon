@@ -72,6 +72,8 @@ public partial class vehmonEntities2 : DbContext
 
     public DbSet<user> users { get; set; }
 
+    public DbSet<userabsencebalance> userabsencebalances { get; set; }
+
 }
 
 }

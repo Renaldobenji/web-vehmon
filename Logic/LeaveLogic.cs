@@ -84,7 +84,7 @@ namespace Logic
                     Status = (x.approved.HasValue ? (x.approved.Value == false ? "Declined" : "Approved") : "Pending")
                 }).ToList();
 
-                response.AvailableBalance = 0;//This must be replaced
+                response.AvailableBalance = userCurrent.userabsencebalances.Sum(s => s.amount);
             }
 
             return response;

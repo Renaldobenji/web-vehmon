@@ -39,9 +39,9 @@ namespace TestServices
             //    user.company = user2.company;
             //    context.SaveChanges();
             //}
-            var DatePast = DateTime.Now.AddHours(-7);
+            var DatePast = DateTime.Now.AddDays(-1);
             var futureDate = DateTime.Now;
-            var diffInMin = DatePast.Subtract(futureDate).TotalMinutes;
+            var diffInMin = futureDate.Subtract(DatePast).Days;
 
             string time = "2015-11-11-11-11";
             var dateTime = DateTime.ParseExact(time, "yyyy-MM-dd-HH-mm", CultureInfo.InvariantCulture);

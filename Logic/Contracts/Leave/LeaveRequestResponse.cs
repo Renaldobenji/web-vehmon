@@ -13,7 +13,7 @@ namespace Logic.Contracts.Leave
         public List<LeaveRequestContract> LeaveRequests { get; set; }
 
         [DataMember]
-        public int AvailableBalance { get; set; }
+        public decimal AvailableBalance { get; set; }
 
         [DataMember]
         public int RequestId { get; set; }

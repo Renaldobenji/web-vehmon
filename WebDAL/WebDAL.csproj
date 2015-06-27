@@ -104,6 +104,9 @@
     <Compile Include="userabsence.cs">
       <DependentUpon>VehmonEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="userabsencebalance.cs">
+      <DependentUpon>VehmonEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="userconversation.cs">
       <DependentUpon>VehmonEntities.tt</DependentUpon>
     </Compile>

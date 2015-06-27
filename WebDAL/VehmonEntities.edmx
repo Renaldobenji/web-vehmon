@@ -4,35 +4,126 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="vehmonModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="vehmonModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="vehmonModelStoreContainer">
+          <EntitySet Name="absencetype" EntityType="vehmonModel.Store.absencetype" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="auditentry" EntityType="vehmonModel.Store.auditentry" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="auditentrytype" EntityType="vehmonModel.Store.auditentrytype" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="authenticationtoken" EntityType="vehmonModel.Store.authenticationtoken" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="company" EntityType="vehmonModel.Store.company" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="conversation" EntityType="vehmonModel.Store.conversation" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="coord" EntityType="vehmonModel.Store.coord" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="devicecoordinates" EntityType="vehmonModel.Store.devicecoordinates" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="groupmembership" EntityType="vehmonModel.Store.groupmembership" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="grouprolemapping" EntityType="vehmonModel.Store.grouprolemapping" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="groups" EntityType="vehmonModel.Store.groups" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="messages" EntityType="vehmonModel.Store.messages" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="roles" EntityType="vehmonModel.Store.roles" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="route" EntityType="vehmonModel.Store.route" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="timetracking" EntityType="vehmonModel.Store.timetracking" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="userabsence" EntityType="vehmonModel.Store.userabsence" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="userabsencebalance" EntityType="vehmonModel.Store.userabsencebalance" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="userconversation" EntityType="vehmonModel.Store.userconversation" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="usermessagereceipt" EntityType="vehmonModel.Store.usermessagereceipt" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="userrolemapping" EntityType="vehmonModel.Store.userrolemapping" store:Type="Tables" Schema="vehmon" />
+          <EntitySet Name="users" EntityType="vehmonModel.Store.users" store:Type="Tables" Schema="vehmon" />
+          <AssociationSet Name="auditentry_ibfk_1" Association="vehmonModel.Store.auditentry_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="auditentry" EntitySet="auditentry" />
+          </AssociationSet>
+          <AssociationSet Name="authenticationtoken_ibfk_1" Association="vehmonModel.Store.authenticationtoken_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="authenticationtoken" EntitySet="authenticationtoken" />
+          </AssociationSet>
+          <AssociationSet Name="coord_ibfk_1" Association="vehmonModel.Store.coord_ibfk_1">
+            <End Role="route" EntitySet="route" />
+            <End Role="coord" EntitySet="coord" />
+          </AssociationSet>
+          <AssociationSet Name="messages_ibfk_1" Association="vehmonModel.Store.messages_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="messages_ibfk_2" Association="vehmonModel.Store.messages_ibfk_2">
+            <End Role="conversation" EntitySet="conversation" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="route_ibfk_1" Association="vehmonModel.Store.route_ibfk_1">
+            <End Role="timetracking" EntitySet="timetracking" />
+            <End Role="route" EntitySet="route" />
+          </AssociationSet>
+          <AssociationSet Name="timetracking_ibfk_1" Association="vehmonModel.Store.timetracking_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="timetracking" EntitySet="timetracking" />
+          </AssociationSet>
+          <AssociationSet Name="userabsence_ibfk_1" Association="vehmonModel.Store.userabsence_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="userabsence" EntitySet="userabsence" />
+          </AssociationSet>
+          <AssociationSet Name="userabsence_ibfk_2" Association="vehmonModel.Store.userabsence_ibfk_2">
+            <End Role="absencetype" EntitySet="absencetype" />
+            <End Role="userabsence" EntitySet="userabsence" />
+          </AssociationSet>
+          <AssociationSet Name="userconversation_ibfk_1" Association="vehmonModel.Store.userconversation_ibfk_1">
+            <End Role="conversation" EntitySet="conversation" />
+            <End Role="userconversation" EntitySet="userconversation" />
+          </AssociationSet>
+          <AssociationSet Name="userconversation_ibfk_2" Association="vehmonModel.Store.userconversation_ibfk_2">
+            <End Role="users" EntitySet="users" />
+            <End Role="userconversation" EntitySet="userconversation" />
+          </AssociationSet>
+          <AssociationSet Name="userID" Association="vehmonModel.Store.userID">
+            <End Role="users" EntitySet="users" />
+            <End Role="userabsencebalance" EntitySet="userabsencebalance" />
+          </AssociationSet>
+          <AssociationSet Name="usermessagereceipt_ibfk_1" Association="vehmonModel.Store.usermessagereceipt_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="usermessagereceipt" EntitySet="usermessagereceipt" />
+          </AssociationSet>
+          <AssociationSet Name="usermessagereceipt_ibfk_2" Association="vehmonModel.Store.usermessagereceipt_ibfk_2">
+            <End Role="messages" EntitySet="messages" />
+            <End Role="usermessagereceipt" EntitySet="usermessagereceipt" />
+          </AssociationSet>
+          <AssociationSet Name="userrolemapping_ibfk_1" Association="vehmonModel.Store.userrolemapping_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="userrolemapping" EntitySet="userrolemapping" />
+          </AssociationSet>
+          <AssociationSet Name="userrolemapping_ibfk_2" Association="vehmonModel.Store.userrolemapping_ibfk_2">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="userrolemapping" EntitySet="userrolemapping" />
+          </AssociationSet>
+          <AssociationSet Name="users_ibfk_1" Association="vehmonModel.Store.users_ibfk_1">
+            <End Role="company" EntitySet="company" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="absencetype">
           <Key>
             <PropertyRef Name="absenceTypeID" />
           </Key>
-          <Property Name="absenceTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="absenceTypeCode" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="absenceTypeDescription" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="absenceTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="absenceTypeCode" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="absenceTypeDescription" Type="varchar" Nullable="false" MaxLength="500" />
         </EntityType>
         <EntityType Name="auditentry">
           <Key>
             <PropertyRef Name="auditEntryID" />
           </Key>
-          <Property Name="auditEntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="auditEntryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="int" Nullable="false" />
-          <Property Name="auditEntryOwnerType" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="auditEntryOwnerTypeID" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="auditEntrySummary" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="auditEntryDetail" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="auditEntryOwnerType" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="auditEntryOwnerTypeID" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="auditEntrySummary" Type="varchar" Nullable="false" MaxLength="250" />
+          <Property Name="auditEntryDetail" Type="varchar" Nullable="false" />
           <Property Name="auditEntryComment" Type="varchar" MaxLength="250" />
-          <Property Name="auditEntryTime" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="auditEntryTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="auditentrytype">
           <Key>
             <PropertyRef Name="auditEntryTypeID" />
           </Key>
-          <Property Name="auditEntryTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="auditEntryOwnerType" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="auditEntryName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="auditEntryTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="auditEntryOwnerType" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="auditEntryName" Type="varchar" Nullable="false" MaxLength="45" />
           <Property Name="auditEntryDescription" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="authenticationtoken">
@@ -42,34 +133,34 @@
           <Property Name="authenticationTokenValue" Type="guid" Nullable="false" />
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="ipAddress" Type="varchar" MaxLength="100" />
-          <Property Name="issueDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="lastActivityDate" Type="datetime" Precision="0" />
+          <Property Name="issueDate" Type="datetime" Nullable="false" />
+          <Property Name="lastActivityDate" Type="datetime" />
         </EntityType>
         <EntityType Name="company">
           <Key>
             <PropertyRef Name="companyID" />
           </Key>
-          <Property Name="companyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="companyName" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="companyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="companyName" Type="varchar" Nullable="false" MaxLength="512" />
           <Property Name="isActive" Type="bit" Nullable="false" />
-          <Property Name="dateAdded" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="dateAdded" Type="datetime" Nullable="false" />
           <Property Name="userCount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="conversation">
           <Key>
             <PropertyRef Name="conversationID" />
           </Key>
-          <Property Name="conversationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="dateCreated" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="conversationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="dateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="coord">
           <Key>
             <PropertyRef Name="coordID" />
           </Key>
-          <Property Name="coordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="coordID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="routeID" Type="int" Nullable="false" />
-          <Property Name="time" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="time" Type="datetime" Nullable="false" />
           <Property Name="lat" Type="decimal" Precision="9" Scale="6" />
           <Property Name="lng" Type="decimal" Precision="9" Scale="6" />
         </EntityType>
@@ -77,70 +168,70 @@
           <Key>
             <PropertyRef Name="deviceCoordinatesID" />
           </Key>
-          <Property Name="deviceCoordinatesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="deviceID" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="deviceLat" Type="decimal" Precision="9" Scale="6" Nullable="false" />
-          <Property Name="deviceLng" Type="decimal" Precision="9" Scale="6" Nullable="false" />
-          <Property Name="dateTime" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="deviceCoordinatesID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="deviceID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="deviceLat" Type="decimal" Nullable="false" Precision="9" Scale="6" />
+          <Property Name="deviceLng" Type="decimal" Nullable="false" Precision="9" Scale="6" />
+          <Property Name="dateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="groupmembership">
           <Key>
             <PropertyRef Name="groupMembershipID" />
           </Key>
-          <Property Name="groupMembershipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="groupMembershipID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="int" Nullable="false" />
-          <Property Name="groupCode" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="fromDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="toDate" Type="datetime" Precision="0" />
+          <Property Name="groupCode" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="fromDate" Type="datetime" Nullable="false" />
+          <Property Name="toDate" Type="datetime" />
         </EntityType>
         <EntityType Name="grouprolemapping">
           <Key>
             <PropertyRef Name="groupRoleMappingID" />
           </Key>
-          <Property Name="groupRoleMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="groupCode" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="roleCode" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="fromDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="toDate" Type="datetime" Precision="0" />
+          <Property Name="groupRoleMappingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="groupCode" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="roleCode" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="fromDate" Type="datetime" Nullable="false" />
+          <Property Name="toDate" Type="datetime" />
         </EntityType>
         <EntityType Name="groups">
           <Key>
             <PropertyRef Name="groupID" />
           </Key>
-          <Property Name="groupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="groupCode" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="groupName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="groupID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="groupCode" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="groupName" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="groupDescription" Type="varchar" MaxLength="100" />
-          <Property Name="groupStatus" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="groupStatus" Type="varchar" Nullable="false" MaxLength="45" />
         </EntityType>
         <EntityType Name="messages">
           <Key>
             <PropertyRef Name="messageID" />
           </Key>
-          <Property Name="messageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="messageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="conversationID" Type="int" Nullable="false" />
-          <Property Name="messageText" Type="varchar" MaxLength="512" Nullable="false" />
-          <Property Name="dateSent" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="messageText" Type="varchar" Nullable="false" MaxLength="512" />
+          <Property Name="dateSent" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="roles">
           <Key>
             <PropertyRef Name="roleID" />
           </Key>
-          <Property Name="roleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="roleCode" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="roleName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="roleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="roleCode" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="roleName" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="roleDescription" Type="varchar" MaxLength="200" />
-          <Property Name="roleStatus" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="roleStatus" Type="varchar" Nullable="false" MaxLength="10" />
         </EntityType>
         <EntityType Name="route">
           <Key>
             <PropertyRef Name="routeID" />
           </Key>
-          <Property Name="routeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="routeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="timeTrackingID" Type="int" Nullable="false" />
-          <Property Name="startTime" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="endTime" Type="datetime" Precision="0" />
+          <Property Name="startTime" Type="datetime" Nullable="false" />
+          <Property Name="endTime" Type="datetime" />
           <Property Name="clockInLat" Type="decimal" Precision="9" Scale="6" />
           <Property Name="clockInLng" Type="decimal" Precision="9" Scale="6" />
         </EntityType>
@@ -148,10 +239,10 @@
           <Key>
             <PropertyRef Name="timeTrackingID" />
           </Key>
-          <Property Name="timeTrackingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timeTrackingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="int" Nullable="false" />
-          <Property Name="clockInTime" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="clockOutTime" Type="datetime" Precision="0" />
+          <Property Name="clockInTime" Type="datetime" Nullable="false" />
+          <Property Name="clockOutTime" Type="datetime" />
           <Property Name="clockInLat" Type="decimal" Precision="9" Scale="6" />
           <Property Name="clockInLng" Type="decimal" Precision="9" Scale="6" />
           <Property Name="clockOutLat" Type="decimal" Precision="9" Scale="6" />
@@ -161,18 +252,27 @@
           <Key>
             <PropertyRef Name="userAbsenseID" />
           </Key>
-          <Property Name="userAbsenseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userAbsenseID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="userId" Type="int" Nullable="false" />
           <Property Name="absenseTypeID" Type="int" Nullable="false" />
-          <Property Name="fromDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="toDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="approved" Type="bit" Nullable="false" />
+          <Property Name="fromDate" Type="datetime" Nullable="false" />
+          <Property Name="toDate" Type="datetime" Nullable="false" />
+          <Property Name="approved" Type="bit" />
+        </EntityType>
+        <EntityType Name="userabsencebalance">
+          <Key>
+            <PropertyRef Name="iduserabsencebalanceID" />
+          </Key>
+          <Property Name="iduserabsencebalanceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="amount" Type="decimal" Nullable="false" Precision="5" />
+          <Property Name="datestamp" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="userconversation">
           <Key>
             <PropertyRef Name="userConversationID" />
           </Key>
-          <Property Name="userConversationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userConversationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="conversationID" Type="int" Nullable="false" />
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="isHidden" Type="bit" Nullable="false" />
@@ -181,7 +281,7 @@
           <Key>
             <PropertyRef Name="userMessageReceiptID" />
           </Key>
-          <Property Name="userMessageReceiptID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userMessageReceiptID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="messageID" Type="int" Nullable="false" />
           <Property Name="hasReceived" Type="bit" />
           <Property Name="userID" Type="int" Nullable="false" />
@@ -190,41 +290,41 @@
           <Key>
             <PropertyRef Name="userRoleMappingID" />
           </Key>
-          <Property Name="userRoleMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userRoleMappingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="roleID" Type="int" Nullable="false" />
-          <Property Name="fromDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="toDate" Type="datetime" Precision="0" />
+          <Property Name="fromDate" Type="datetime" Nullable="false" />
+          <Property Name="toDate" Type="datetime" />
         </EntityType>
         <EntityType Name="users">
           <Key>
             <PropertyRef Name="userID" />
           </Key>
-          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="companyID" Type="int" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="passwordSalt" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="title" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="firstname" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="surname" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="employerNumber" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="identificationNumber" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="deviceID" Type="varchar" MaxLength="100" />
+          <Property Name="username" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="password" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="passwordSalt" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="title" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="firstname" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="surname" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="employerNumber" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="identificationNumber" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="deviceID" Type="varchar" MaxLength="500" />
           <Property Name="emailAddress" Type="varchar" MaxLength="100" />
           <Property Name="cellNumber" Type="varchar" MaxLength="45" />
           <Property Name="isApproved" Type="bit" Nullable="false" />
-          <Property Name="isLockedOut" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="lastActivityDate" Type="datetime" Precision="0" />
-          <Property Name="lastPasswordChange" Type="datetime" Precision="0" />
-          <Property Name="lastLoginDate" Type="datetime" Precision="0" />
+          <Property Name="isLockedOut" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="lastActivityDate" Type="datetime" />
+          <Property Name="lastPasswordChange" Type="datetime" />
+          <Property Name="lastLoginDate" Type="datetime" />
           <Property Name="failedPasswordAttemptCount" Type="int" />
-          <Property Name="created" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="updated" Type="datetime" Precision="0" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="updated" Type="datetime" />
         </EntityType>
         <Association Name="auditentry_ibfk_1">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="auditentry" Type="Self.auditentry" Multiplicity="*" />
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
+          <End Role="auditentry" Type="vehmonModel.Store.auditentry" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userID" />
@@ -235,8 +335,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="authenticationtoken_ibfk_1">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="authenticationtoken" Type="Self.authenticationtoken" Multiplicity="*" />
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
+          <End Role="authenticationtoken" Type="vehmonModel.Store.authenticationtoken" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userID" />
@@ -247,8 +347,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="coord_ibfk_1">
-          <End Role="route" Type="Self.route" Multiplicity="1" />
-          <End Role="coord" Type="Self.coord" Multiplicity="*" />
+          <End Role="route" Type="vehmonModel.Store.route" Multiplicity="1" />
+          <End Role="coord" Type="vehmonModel.Store.coord" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="route">
               <PropertyRef Name="routeID" />
@@ -259,8 +359,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="messages_ibfk_1">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
+          <End Role="messages" Type="vehmonModel.Store.messages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userID" />
@@ -271,8 +371,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="messages_ibfk_2">
-          <End Role="conversation" Type="Self.conversation" Multiplicity="1" />
-          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <End Role="conversation" Type="vehmonModel.Store.conversation" Multiplicity="1" />
+          <End Role="messages" Type="vehmonModel.Store.messages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="conversation">
               <PropertyRef Name="conversationID" />
@@ -283,8 +383,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="route_ibfk_1">
-          <End Role="timetracking" Type="Self.timetracking" Multiplicity="1" />
-          <End Role="route" Type="Self.route" Multiplicity="*" />
+          <End Role="timetracking" Type="vehmonModel.Store.timetracking" Multiplicity="1" />
+          <End Role="route" Type="vehmonModel.Store.route" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="timetracking">
               <PropertyRef Name="timeTrackingID" />
@@ -295,8 +395,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="timetracking_ibfk_1">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="timetracking" Type="Self.timetracking" Multiplicity="*" />
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
+          <End Role="timetracking" Type="vehmonModel.Store.timetracking" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userID" />
@@ -307,8 +407,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="userabsence_ibfk_1">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="userabsence" Type="Self.userabsence" Multiplicity="*" />
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
+          <End Role="userabsence" Type="vehmonModel.Store.userabsence" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userID" />
@@ -319,8 +419,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="userabsence_ibfk_2">
-          <End Role="absencetype" Type="Self.absencetype" Multiplicity="1" />
-          <End Role="userabsence" Type="Self.userabsence" Multiplicity="*" />
+          <End Role="absencetype" Type="vehmonModel.Store.absencetype" Multiplicity="1" />
+          <End Role="userabsence" Type="vehmonModel.Store.userabsence" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="absencetype">
               <PropertyRef Name="absenceTypeID" />
@@ -331,8 +431,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="userconversation_ibfk_1">
-          <End Role="conversation" Type="Self.conversation" Multiplicity="1" />
-          <End Role="userconversation" Type="Self.userconversation" Multiplicity="*" />
+          <End Role="conversation" Type="vehmonModel.Store.conversation" Multiplicity="1" />
+          <End Role="userconversation" Type="vehmonModel.Store.userconversation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="conversation">
               <PropertyRef Name="conversationID" />
@@ -343,8 +443,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="userconversation_ibfk_2">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="userconversation" Type="Self.userconversation" Multiplicity="*" />
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
+          <End Role="userconversation" Type="vehmonModel.Store.userconversation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userID" />
@@ -354,9 +454,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="userID">
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
+          <End Role="userabsencebalance" Type="vehmonModel.Store.userabsencebalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userabsencebalance">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="usermessagereceipt_ibfk_1">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="usermessagereceipt" Type="Self.usermessagereceipt" Multiplicity="*" />
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
+          <End Role="usermessagereceipt" Type="vehmonModel.Store.usermessagereceipt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userID" />
@@ -367,8 +479,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="usermessagereceipt_ibfk_2">
-          <End Role="messages" Type="Self.messages" Multiplicity="1" />
-          <End Role="usermessagereceipt" Type="Self.usermessagereceipt" Multiplicity="*" />
+          <End Role="messages" Type="vehmonModel.Store.messages" Multiplicity="1" />
+          <End Role="usermessagereceipt" Type="vehmonModel.Store.usermessagereceipt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="messages">
               <PropertyRef Name="messageID" />
@@ -379,8 +491,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="userrolemapping_ibfk_1">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="userrolemapping" Type="Self.userrolemapping" Multiplicity="*" />
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="1" />
+          <End Role="userrolemapping" Type="vehmonModel.Store.userrolemapping" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userID" />
@@ -391,8 +503,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="userrolemapping_ibfk_2">
-          <End Role="roles" Type="Self.roles" Multiplicity="1" />
-          <End Role="userrolemapping" Type="Self.userrolemapping" Multiplicity="*" />
+          <End Role="roles" Type="vehmonModel.Store.roles" Multiplicity="1" />
+          <End Role="userrolemapping" Type="vehmonModel.Store.userrolemapping" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="roles">
               <PropertyRef Name="roleID" />
@@ -403,8 +515,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="users_ibfk_1">
-          <End Role="company" Type="Self.company" Multiplicity="1" />
-          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <End Role="company" Type="vehmonModel.Store.company" Multiplicity="1" />
+          <End Role="users" Type="vehmonModel.Store.users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="company">
               <PropertyRef Name="companyID" />
@@ -414,92 +526,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="vehmonModelStoreContainer">
-          <EntitySet Name="absencetype" EntityType="Self.absencetype" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="auditentry" EntityType="Self.auditentry" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="auditentrytype" EntityType="Self.auditentrytype" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="authenticationtoken" EntityType="Self.authenticationtoken" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="company" EntityType="Self.company" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="conversation" EntityType="Self.conversation" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="coord" EntityType="Self.coord" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="devicecoordinates" EntityType="Self.devicecoordinates" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="groupmembership" EntityType="Self.groupmembership" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="grouprolemapping" EntityType="Self.grouprolemapping" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="groups" EntityType="Self.groups" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="messages" EntityType="Self.messages" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="roles" EntityType="Self.roles" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="route" EntityType="Self.route" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="timetracking" EntityType="Self.timetracking" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="userabsence" EntityType="Self.userabsence" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="userconversation" EntityType="Self.userconversation" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="usermessagereceipt" EntityType="Self.usermessagereceipt" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="userrolemapping" EntityType="Self.userrolemapping" Schema="vehmon" store:Type="Tables" />
-          <EntitySet Name="users" EntityType="Self.users" Schema="vehmon" store:Type="Tables" />
-          <AssociationSet Name="auditentry_ibfk_1" Association="Self.auditentry_ibfk_1">
-            <End Role="users" EntitySet="users" />
-            <End Role="auditentry" EntitySet="auditentry" />
-          </AssociationSet>
-          <AssociationSet Name="authenticationtoken_ibfk_1" Association="Self.authenticationtoken_ibfk_1">
-            <End Role="users" EntitySet="users" />
-            <End Role="authenticationtoken" EntitySet="authenticationtoken" />
-          </AssociationSet>
-          <AssociationSet Name="coord_ibfk_1" Association="Self.coord_ibfk_1">
-            <End Role="route" EntitySet="route" />
-            <End Role="coord" EntitySet="coord" />
-          </AssociationSet>
-          <AssociationSet Name="messages_ibfk_1" Association="Self.messages_ibfk_1">
-            <End Role="users" EntitySet="users" />
-            <End Role="messages" EntitySet="messages" />
-          </AssociationSet>
-          <AssociationSet Name="messages_ibfk_2" Association="Self.messages_ibfk_2">
-            <End Role="conversation" EntitySet="conversation" />
-            <End Role="messages" EntitySet="messages" />
-          </AssociationSet>
-          <AssociationSet Name="route_ibfk_1" Association="Self.route_ibfk_1">
-            <End Role="timetracking" EntitySet="timetracking" />
-            <End Role="route" EntitySet="route" />
-          </AssociationSet>
-          <AssociationSet Name="timetracking_ibfk_1" Association="Self.timetracking_ibfk_1">
-            <End Role="users" EntitySet="users" />
-            <End Role="timetracking" EntitySet="timetracking" />
-          </AssociationSet>
-          <AssociationSet Name="userabsence_ibfk_1" Association="Self.userabsence_ibfk_1">
-            <End Role="users" EntitySet="users" />
-            <End Role="userabsence" EntitySet="userabsence" />
-          </AssociationSet>
-          <AssociationSet Name="userabsence_ibfk_2" Association="Self.userabsence_ibfk_2">
-            <End Role="absencetype" EntitySet="absencetype" />
-            <End Role="userabsence" EntitySet="userabsence" />
-          </AssociationSet>
-          <AssociationSet Name="userconversation_ibfk_1" Association="Self.userconversation_ibfk_1">
-            <End Role="conversation" EntitySet="conversation" />
-            <End Role="userconversation" EntitySet="userconversation" />
-          </AssociationSet>
-          <AssociationSet Name="userconversation_ibfk_2" Association="Self.userconversation_ibfk_2">
-            <End Role="users" EntitySet="users" />
-            <End Role="userconversation" EntitySet="userconversation" />
-          </AssociationSet>
-          <AssociationSet Name="usermessagereceipt_ibfk_1" Association="Self.usermessagereceipt_ibfk_1">
-            <End Role="users" EntitySet="users" />
-            <End Role="usermessagereceipt" EntitySet="usermessagereceipt" />
-          </AssociationSet>
-          <AssociationSet Name="usermessagereceipt_ibfk_2" Association="Self.usermessagereceipt_ibfk_2">
-            <End Role="messages" EntitySet="messages" />
-            <End Role="usermessagereceipt" EntitySet="usermessagereceipt" />
-          </AssociationSet>
-          <AssociationSet Name="userrolemapping_ibfk_1" Association="Self.userrolemapping_ibfk_1">
-            <End Role="users" EntitySet="users" />
-            <End Role="userrolemapping" EntitySet="userrolemapping" />
-          </AssociationSet>
-          <AssociationSet Name="userrolemapping_ibfk_2" Association="Self.userrolemapping_ibfk_2">
-            <End Role="roles" EntitySet="roles" />
-            <End Role="userrolemapping" EntitySet="userrolemapping" />
-          </AssociationSet>
-          <AssociationSet Name="users_ibfk_1" Association="Self.users_ibfk_1">
-            <End Role="company" EntitySet="company" />
-            <End Role="users" EntitySet="users" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -524,7 +550,7 @@
           <Property Name="auditEntrySummary" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="auditEntryDetail" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="auditEntryComment" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="auditEntryTime" Type="DateTime" Nullable="false" />
+          <Property Name="auditEntryTime" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="user" Relationship="Self.auditentry_ibfk_1" FromRole="auditentry" ToRole="users" />
         </EntityType>
         <EntityType Name="auditentrytype">
@@ -543,8 +569,8 @@
           <Property Name="authenticationTokenValue" Type="Guid" Nullable="false" />
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="ipAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="issueDate" Type="DateTime" Nullable="false" />
-          <Property Name="lastActivityDate" Type="DateTime" />
+          <Property Name="issueDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="lastActivityDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="user" Relationship="Self.authenticationtoken_ibfk_1" FromRole="authenticationtoken" ToRole="users" />
         </EntityType>
         <EntityType Name="conversation">
@@ -553,7 +579,7 @@
           </Key>
           <Property Name="conversationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="dateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="dateCreated" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="messages" Relationship="Self.messages_ibfk_2" FromRole="conversation" ToRole="messages" />
           <NavigationProperty Name="userconversations" Relationship="Self.userconversation_ibfk_1" FromRole="conversation" ToRole="userconversation" />
         </EntityType>
@@ -563,9 +589,9 @@
           </Key>
           <Property Name="coordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="routeID" Type="Int32" Nullable="false" />
-          <Property Name="time" Type="DateTime" Nullable="false" />
-          <Property Name="lat" Type="Decimal" />
-          <Property Name="lng" Type="Decimal" />
+          <Property Name="time" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="lat" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="lng" Type="Decimal" Precision="9" Scale="6" />
           <NavigationProperty Name="route" Relationship="Self.coord_ibfk_1" FromRole="coord" ToRole="route" />
         </EntityType>
         <EntityType Name="devicecoordinate">
@@ -574,9 +600,9 @@
           </Key>
           <Property Name="deviceCoordinatesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="deviceID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="deviceLat" Type="Decimal" Nullable="false" />
-          <Property Name="deviceLng" Type="Decimal" Nullable="false" />
-          <Property Name="dateTime" Type="DateTime" Nullable="false" />
+          <Property Name="deviceLat" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
+          <Property Name="deviceLng" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
+          <Property Name="dateTime" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="groupmembership">
           <Key>
@@ -585,8 +611,8 @@
           <Property Name="groupMembershipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="groupCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fromDate" Type="DateTime" Nullable="false" />
-          <Property Name="toDate" Type="DateTime" />
+          <Property Name="fromDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="toDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="grouprolemapping">
           <Key>
@@ -595,8 +621,8 @@
           <Property Name="groupRoleMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="groupCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="roleCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fromDate" Type="DateTime" Nullable="false" />
-          <Property Name="toDate" Type="DateTime" />
+          <Property Name="fromDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="toDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="group">
           <Key>
@@ -616,7 +642,7 @@
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="conversationID" Type="Int32" Nullable="false" />
           <Property Name="messageText" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="dateSent" Type="DateTime" Nullable="false" />
+          <Property Name="dateSent" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="conversation" Relationship="Self.messages_ibfk_2" FromRole="messages" ToRole="conversation" />
           <NavigationProperty Name="user" Relationship="Self.messages_ibfk_1" FromRole="messages" ToRole="users" />
           <NavigationProperty Name="usermessagereceipts" Relationship="Self.usermessagereceipt_ibfk_2" FromRole="messages" ToRole="usermessagereceipt" />
@@ -638,10 +664,10 @@
           </Key>
           <Property Name="routeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="timeTrackingID" Type="Int32" Nullable="false" />
-          <Property Name="startTime" Type="DateTime" Nullable="false" />
-          <Property Name="endTime" Type="DateTime" />
-          <Property Name="clockInLat" Type="Decimal" />
-          <Property Name="clockInLng" Type="Decimal" />
+          <Property Name="startTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="endTime" Type="DateTime" Precision="0" />
+          <Property Name="clockInLat" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="clockInLng" Type="Decimal" Precision="9" Scale="6" />
           <NavigationProperty Name="coords" Relationship="Self.coord_ibfk_1" FromRole="route" ToRole="coord" />
           <NavigationProperty Name="timetracking" Relationship="Self.route_ibfk_1" FromRole="route" ToRole="timetracking" />
         </EntityType>
@@ -651,12 +677,12 @@
           </Key>
           <Property Name="timeTrackingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" Nullable="false" />
-          <Property Name="clockInTime" Type="DateTime" Nullable="false" />
-          <Property Name="clockOutTime" Type="DateTime" />
-          <Property Name="clockInLat" Type="Decimal" />
-          <Property Name="clockInLng" Type="Decimal" />
-          <Property Name="clockOutLat" Type="Decimal" />
-          <Property Name="clockOutLng" Type="Decimal" />
+          <Property Name="clockInTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="clockOutTime" Type="DateTime" Precision="0" />
+          <Property Name="clockInLat" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="clockInLng" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="clockOutLat" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="clockOutLng" Type="Decimal" Precision="9" Scale="6" />
           <NavigationProperty Name="routes" Relationship="Self.route_ibfk_1" FromRole="timetracking" ToRole="route" />
           <NavigationProperty Name="user" Relationship="Self.timetracking_ibfk_1" FromRole="timetracking" ToRole="users" />
         </EntityType>
@@ -667,11 +693,11 @@
           <Property Name="userAbsenseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userId" Type="Int32" Nullable="false" />
           <Property Name="absenseTypeID" Type="Int32" Nullable="false" />
-          <Property Name="fromDate" Type="DateTime" Nullable="false" />
-          <Property Name="toDate" Type="DateTime" Nullable="false" />
+          <Property Name="fromDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="toDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="absencetype" Relationship="Self.userabsence_ibfk_2" FromRole="userabsence" ToRole="absencetype" />
           <NavigationProperty Name="user" Relationship="Self.userabsence_ibfk_1" FromRole="userabsence" ToRole="users" />
-          <Property Name="approved" Type="Boolean" Nullable="false" />
+          <Property Name="approved" Type="Boolean" />
         </EntityType>
         <EntityType Name="userconversation">
           <Key>
@@ -702,8 +728,8 @@
           <Property Name="userRoleMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="roleID" Type="Int32" Nullable="false" />
-          <Property Name="fromDate" Type="DateTime" Nullable="false" />
-          <Property Name="toDate" Type="DateTime" />
+          <Property Name="fromDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="toDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="role" Relationship="Self.userrolemapping_ibfk_2" FromRole="userrolemapping" ToRole="roles" />
           <NavigationProperty Name="user" Relationship="Self.userrolemapping_ibfk_1" FromRole="userrolemapping" ToRole="users" />
         </EntityType>
@@ -720,17 +746,17 @@
           <Property Name="surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="employerNumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="identificationNumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="deviceID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="deviceID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="emailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="cellNumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="isApproved" Type="Boolean" Nullable="false" />
           <Property Name="isLockedOut" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="lastActivityDate" Type="DateTime" />
-          <Property Name="lastPasswordChange" Type="DateTime" />
-          <Property Name="lastLoginDate" Type="DateTime" />
+          <Property Name="lastActivityDate" Type="DateTime" Precision="0" />
+          <Property Name="lastPasswordChange" Type="DateTime" Precision="0" />
+          <Property Name="lastLoginDate" Type="DateTime" Precision="0" />
           <Property Name="failedPasswordAttemptCount" Type="Int32" />
-          <Property Name="created" Type="DateTime" Nullable="false" />
-          <Property Name="updated" Type="DateTime" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated" Type="DateTime" Precision="0" />
           <NavigationProperty Name="auditentries" Relationship="Self.auditentry_ibfk_1" FromRole="users" ToRole="auditentry" />
           <NavigationProperty Name="authenticationtokens" Relationship="Self.authenticationtoken_ibfk_1" FromRole="users" ToRole="authenticationtoken" />
           <NavigationProperty Name="messages" Relationship="Self.messages_ibfk_1" FromRole="users" ToRole="messages" />
@@ -741,6 +767,7 @@
           <NavigationProperty Name="userrolemappings" Relationship="Self.userrolemapping_ibfk_1" FromRole="users" ToRole="userrolemapping" />
           <Property Name="companyID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="company" Relationship="vehmonModel.users_ibfk_1" FromRole="user" ToRole="company" />
+          <NavigationProperty Name="userabsencebalances" Relationship="vehmonModel.userID" FromRole="user" ToRole="userabsencebalance" />
         </EntityType>
         <Association Name="userabsence_ibfk_2">
           <End Role="absencetype" Type="Self.absencetype" Multiplicity="1" />
@@ -1007,6 +1034,11 @@
             <End Role="company" EntitySet="companies" />
             <End Role="user" EntitySet="users" />
           </AssociationSet>
+          <EntitySet Name="userabsencebalances" EntityType="vehmonModel.userabsencebalance" />
+          <AssociationSet Name="userID" Association="vehmonModel.userID">
+            <End Role="user" EntitySet="users" />
+            <End Role="userabsencebalance" EntitySet="userabsencebalances" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="company">
           <Key>
@@ -1015,7 +1047,7 @@
           <Property Name="companyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="companyName" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="false" />
           <Property Name="isActive" Type="Boolean" Nullable="false" />
-          <Property Name="dateAdded" Type="DateTime" Nullable="false" />
+          <Property Name="dateAdded" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="userCount" Type="Int32" Nullable="false" />
           <NavigationProperty Name="users" Relationship="vehmonModel.users_ibfk_1" FromRole="company" ToRole="user" />
         </EntityType>
@@ -1028,6 +1060,28 @@
             </Principal>
             <Dependent Role="user">
               <PropertyRef Name="companyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="userabsencebalance">
+          <Key>
+            <PropertyRef Name="iduserabsencebalanceID" />
+          </Key>
+          <Property Type="Int32" Name="iduserabsencebalanceID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="Decimal" Name="amount" Nullable="false" Precision="5" Scale="0" />
+          <Property Type="DateTime" Name="datestamp" Nullable="false" Precision="0" />
+          <NavigationProperty Name="user" Relationship="vehmonModel.userID" FromRole="userabsencebalance" ToRole="user" />
+        </EntityType>
+        <Association Name="userID">
+          <End Type="vehmonModel.user" Role="user" Multiplicity="1" />
+          <End Type="vehmonModel.userabsencebalance" Role="userabsencebalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userabsencebalance">
+              <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1271,6 +1325,16 @@
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="companyName" ColumnName="companyName" />
                 <ScalarProperty Name="companyID" ColumnName="companyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userabsencebalances">
+            <EntityTypeMapping TypeName="vehmonModel.userabsencebalance">
+              <MappingFragment StoreEntitySet="userabsencebalance">
+                <ScalarProperty Name="datestamp" ColumnName="datestamp" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="iduserabsencebalanceID" ColumnName="iduserabsencebalanceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
