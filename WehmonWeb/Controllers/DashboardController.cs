@@ -153,9 +153,7 @@ namespace WehmonWeb.Controllers
         {
             using (var context = new vehmonEntities())
             {
-                var leave = context.userabsences.Single(x => x.userAbsenseID == leaveId);
-
-                context.userabsences.Remove(leave);
+                var leave = context.userabsences.Single(x => x.userAbsenseID == leaveId);                
 
                 //Send Notification                
                 new AndroidPushNotifications().PushNotification(
@@ -166,9 +164,9 @@ namespace WehmonWeb.Controllers
                                 NotificationPayload = "Your Leave has been Rejected"
                             }
                         );
-                context.SaveChanges();
 
-                
+                context.userabsences.Remove(leave);
+                context.SaveChanges();
             }
             return RedirectToAction("DisplayLeave", new { pageNumber, showAll, userId });
         }
@@ -190,8 +188,11 @@ namespace WehmonWeb.Controllers
                 users.AddRange(currentCompany.users.Select(x => new KeyValuePair<int, string>(x.userID, x.username)).ToList());
                 ViewBag.Users = users;
                 ViewBag.LeaveTypes = context.absencetypes.ToList().Select(x => new KeyValuePair<int, string>(x.absenceTypeID, x.absenceTypeCode)).ToList();
-                IEnumerable<userabsence> leaves = currentCompany.users.Where(x => x.isApproved)
-                        .SelectMany(x => x.userabsences).OrderBy(x => x.fromDate);
+                IEnumerable<userabsence> leaves = 
+                    currentCompany.users.Where(x => x.isApproved)
+                    .SelectMany(x => x.userabsences).Where(x => x.approved == null).OrderBy(x => x.fromDate);
+
+
                 if (userId != -1)
                 {
                     leaves = leaves.Where(x => x.userId == userId);
