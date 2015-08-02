@@ -15,6 +15,10 @@ namespace WehmonWeb.Models
 
         public double HoursWorked { get; set; }
 
+        public String StartCOORDS { get; set; }
+
+        public String EndCOORDS { get; set; }
+
         public int ShiftId { get; set; }
     }
 }

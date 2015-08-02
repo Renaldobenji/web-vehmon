@@ -14,6 +14,13 @@ namespace WehmonWeb.Controllers
         //
         // GET: /Maps/
 
+        public ActionResult Index(String coords)
+        {
+            ViewBag.coords = coords;
+
+            return View(ViewBag);
+        }
+
         public ActionResult RenderShiftTreeView(int selected = -1)
         {
             var model = new ShiftsModel();

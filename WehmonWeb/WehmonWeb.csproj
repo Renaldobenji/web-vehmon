@@ -241,6 +241,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MapsController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Filters\CustomMembershipProvider .cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -248,6 +249,7 @@
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\UserInfo.cs" />
+    <Compile Include="Infrastructure\MySQLStoredProcedure.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\CompanyModel.cs" />
@@ -259,6 +261,7 @@
     <Compile Include="Models\LeaveModel.cs" />
     <Compile Include="Models\MapsStartupModel.cs" />
     <Compile Include="Models\MessageModel.cs" />
+    <Compile Include="Models\PayRunModel.cs" />
     <Compile Include="Models\ShiftEntryModel.cs" />
     <Compile Include="Models\ShiftModel.cs" />
     <Compile Include="Models\ShiftsModel.cs" />
@@ -406,6 +409,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Main.pubxml" />
+    <None Include="Properties\PublishProfiles\VehmonPublish.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\bloodhound.js" />
     <Content Include="Scripts\bloodhound.min.js" />
@@ -503,6 +507,7 @@
     <Content Include="Views\Dashboard\LeaveView.cshtml" />
     <Content Include="Views\Maps\_RenderShiftTreeView.cshtml" />
     <Content Include="Views\Dashboard\DisplayShifts.cshtml" />
+    <Content Include="Views\Reports\PayRun.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

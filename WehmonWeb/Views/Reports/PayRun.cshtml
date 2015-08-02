@@ -1,0 +1,70 @@
+﻿@model List<WehmonWeb.Models.PayRunModel>
+@{    
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+<div class="row">
+    <div class="col-md-2">
+        <h2 style="margin-top: 10px" class="pull-left">Pay Run</h2>
+    </div>
+    <div class="col-md-12">
+        <div style="padding-bottom: 5px; padding-top: 5px" class="pull-left well col-md-7">
+            <form action="@Url.Action("PayRun")" method="GET" class="form-inline">
+                <div class="form-group">                    
+                    <div class="col-sm-12">
+                        <div id="dateContainer" class="input-group">                            
+                            <div class="input-group-addon">From</div>
+                            <input value="@ViewBag.startDate" name="startDate" type="text" class="form-control datepicker" id="startDate" placeholder="dd/mm/yyy">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+                            <input value="@ViewBag.endDate" name="endDate" type="text" class="form-control datepicker" id="endDate" placeholder="dd/mm/yyy">
+                            <div class="input-group-addon">Until</div>
+                        </div>
+                        <label for="userDropDown">User Name:</label>
+                        <select name="userId" size="1" id="userDropDown" class="form-control ">
+                            @foreach (var i in (List<KeyValuePair<int, string>>)ViewBag.Users)
+                            {
+                                var selected = "";
+                                if (i.Key == (int)ViewBag.CurrentUser)
+                                {
+                                    selected = "selected";
+                                }
+                                <option @selected value="@i.Key">@i.Value</option>
+                            }
+                        </select>
+                        <input type="submit" class="btn btn-success btn-sm" value="Filter" />                        
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        @if (Model.Count > 0)
+        {
+           <div>
+               <table class="table table-striped">
+                <tr>
+                    <th>FirstName</th>
+                    <th>Surname</th>
+                    <th>Total Hours Worked</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.firstname</td>
+                        <td>@item.surname</td>
+                        <td>@item.TotalHoursWorked</td>
+                    </tr>
+                }
+                </table>
+            </div>
+        }
+        
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            orientation: "top",
+            container: "#dateContainer"
+        });
+    });
+</script>

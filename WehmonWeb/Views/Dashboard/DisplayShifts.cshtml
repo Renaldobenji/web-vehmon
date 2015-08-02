@@ -67,16 +67,16 @@ else
 {
     if (ViewBag.CurrentUser > 0)
     {
-         <p style="margin-top: -15px">A total of @Math.Round(Model.TotalHours,2) hours has been worked</p>
+         <p style="margin-top: -15px;padding-bottom:10px;"><b>A total of @Math.Round(Model.TotalHours,2) hours has been worked</b></p>
     }
     <table class="table table-striped">
         <tr>
             <th>User Name</th>
             <th>Start Date</th>
-            <th>End Date</th>
-            <th>Hours Worked</th>
-            <th>Start Day</th>
-            <th>End Day</th>
+            <th>Start COORDS</th>
+            <th>End Date</th>               
+            <th>End COORDS</th>
+            <th>Hours Worked</th>         
             <th>Map</th>
         </tr>
         @foreach (var entry in Model.EntryModels)
@@ -89,22 +89,19 @@ else
                     @entry.ClockInDate
                 </td>
                 <td>
+                    <a target="_blank" href="@Url.Action("MapsDashboard", new { coords = entry.StartCOORDS })">@entry.StartCOORDS</a>
+                </td>
+                <td>
                     @entry.ClockOutDate
                 </td>
                 <td>
+                    <a target="_blank" href="@Url.Action("MapsDashboard", new { coords = entry.EndCOORDS })">@entry.EndCOORDS</a>
+                </td>
+                 <td>
                     @Math.Round(entry.HoursWorked, 2)
                 </td>
                 <td>
-                    @entry.ClockInDate.DayOfWeek
-                </td>
-                <td>
-                    @if (entry.ClockOutDate != null)
-                    {
-                        @entry.ClockOutDate.Value.DayOfWeek
-                    }
-                </td>
-                <td>
-                    <a href="@Url.Action("MapsDashboard", new { shiftId = entry.ShiftId })"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>
+                    <a target="_blank" href="@Url.Action("MapsDashboard", new { shiftId = entry.ShiftId })"> <span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>
                 </td>
             </tr>
         }

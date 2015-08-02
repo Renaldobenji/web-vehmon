@@ -29,13 +29,13 @@ else
     @if (ViewBag.RouteId == -1)
     {
         {
-            Html.RenderAction("RenderTruckDashboard", "Coordinates");
+            //Html.RenderAction("RenderTruckDashboard", "Coordinates");
         }
         {
-            Html.RenderAction("RenderConversationPartial", "Chat");
+            //Html.RenderAction("RenderConversationPartial", "Chat");
         }
         {
-            Html.RenderAction("RenderShiftTreeView", "Maps");
+            //Html.RenderAction("RenderShiftTreeView", "Maps");
         }
     }
 </div>
@@ -49,14 +49,14 @@ else
         this.infoWindow = infoWin;
         this.marker = marker;
     };
-
+    
     var line = function (map) {
         this.GMCoords = [];
         this.GMLine = null;
         var that = this;
         this.map = map;
         this.bounds = null;
-        this.markers = [];
+        this.markers = [];        
         this.LoadFromJson = function (data) {
             that.bounds = new google.maps.LatLngBounds();
             for (var i = 0; i < data.length; i++) {
@@ -103,6 +103,9 @@ else
         }
     }
 
+
+
+    
     function loadLine(routeId) {
         $.ajax({
             url: "@Url.Action("GetCoordinatesForRoute", "Maps")?routeId=" + routeId,
@@ -194,6 +197,22 @@ else
 
     };
 
+    function addCOORDToMap(data) {
+        var coords = data.split(',');
+        var myLatlng = new google.maps.LatLng(coords[0], coords[1]);
+        var mapOptions = {
+            zoom: 16,
+            center: myLatlng
+        }
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: 'Coordinate'
+        });
+    }
+
     var myLatlng = new google.maps.LatLng(-30.397, 25.644);
     var marker;
     var trucker;
@@ -208,6 +227,10 @@ else
     {
         @Html.Raw(String.Format("loadLine({0})",ViewBag.RouteId ))
     }
+        @if (!String.IsNullOrEmpty(Request.Params["coords"]))
+        {
+            @Html.Raw(String.Format("addCOORDToMap('{0}')",Request.Params["coords"]))
+        }
 
         function loadClientMethods(bub) {
 

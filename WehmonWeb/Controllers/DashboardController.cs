@@ -75,23 +75,36 @@ namespace WehmonWeb.Controllers
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize);
 
+                //x.routes.SelectMany(y => y.coords.Select(c => new { coords = string.Format("{0},{1}", c.lat, c.lng) }))
+
                 model.EntryModels = query.ToList().Select(x =>
                 {
                     var shiftModel = new ShiftEntryModel()
                     {
                         ClockInDate = x.clockInTime,
                         ClockOutDate = x.clockOutTime,
-                        ShiftId = x.timeTrackingID,
+                        ShiftId = x.timeTrackingID,                          
                         User = new KeyValuePair<int, string>(x.userID, x.user.username)
                     };
                     if (x.clockOutTime != null)
                     {
                         shiftModel.HoursWorked = x.clockOutTime.Value.Subtract(x.clockInTime).TotalHours;
                     }
+
+                    var coords = x.routes.SelectMany(c => c.coords).FirstOrDefault();
+                    if (coords != null)
+                    {
+                        shiftModel.StartCOORDS = String.Format("{0},{1}", coords.lat, coords.lng);
+                    }
+                    var lcoords = x.routes.SelectMany(c => c.coords).LastOrDefault();
+                    if (lcoords != null)
+                    {
+                        shiftModel.EndCOORDS = String.Format("{0},{1}", lcoords.lat, lcoords.lng);
+                    }
                     return shiftModel;
                 }
-            ).
-            ToList();
+                ).
+                ToList();
             }
             return View(model);
         }
